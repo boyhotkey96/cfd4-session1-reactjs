@@ -4,6 +4,9 @@ import React from "react";
 import Course from "../../../components/Course.js";
 
 export default function CourseList() {
+    function layThongTin(num) {
+        alert(num * 2);
+    }
   return (
     <>
       <section className="section online">
@@ -15,6 +18,8 @@ export default function CourseList() {
           <div className="course">
             <h2 className="title">Khoá học</h2>
             <h2 className="type">online</h2>
+            {/* <button onClick={layThongTin}>onClick</button> */}
+            <button onClick={() => layThongTin(2)}>onClick</button>
             <div className="row">
               <Course
                 title="Front-end căn bản"
