@@ -1,39 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from 'react'
 
-export default function Demo() {
+export default function DemoHook() {
 
-    // Khai báo một biến trạng thái mới đặt tên là "count"
-    const [count = 3, setCount] = useState({
-        c: 0
-    });
-
-    function Increment() {
-        // count.c++;
-        // console.log(count);
-        setCount({
-            // c: count.c++
-            ...count
-        });
+    let [count, setCount] = useState(0);
+    let [val = 1, setVal] = useState();
+    let inputRef = useRef();
+    
+    function increment() {
+        let inputLength = inputRef.current.value.length;
+        inputLength !== 0 ? setVal(val = parseInt(inputRef.current.value)) : setVal(val = 1);
+        count += val;
+        setCount(count);
     }
 
-    // Function: cách 1
-    function Example(props) {
-        // Bạn có thể sử dụng hooks tại đây
-        return <div />
-    } 
-
-    // Function: cách 2
-    const Example2 = (props) => {
-        // Bạn có thể sự dụng hooks tại đây
-        return <div />
+    function decrement() {
+        let inputLength = inputRef.current.value.length;
+        inputLength !==0 ? setVal(val = parseInt(inputRef.current.value)) : setVal(val = 1);
+        count -= val;
+        setCount(count);
     }
+
+    // function setValue() {
+    //     if (inputRef.current.value.length !== 0) {
+    //         setVal(parseInt(inputRef.current.value));
+    //     } else {
+    //         setVal(1);
+    //     }
+    // }
 
     return (
-        <>
-            <p style={{fontSize: '26px'}}>Count: {count.c}</p>
-            <button style={{color: 'red',fontSize: '26px'}} onDoubleClick={Increment}>Tăng count +</button>
+        <>  
+            <input type="number" style={{padding: 10}} ref={inputRef} />
+            Count: {count}
             <br />
-            <button style={{color: 'blue',fontSize: '26px'}} onClick={() => setCount(count - 1)}>Giảm count -</button>
+            <button onClick={increment} style={{fontSize: 24,border:'2px solid black'}}>Increment</button>
+            <span> </span>
+            <button onClick={decrement} style={{fontSize: 24,border:'2px solid black'}}>Decrement</button>
+            <br />
+            {/* <button onClick={setValue} style={{fontSize: 24,border:'2px solid black'}}>SetValue</button> */}
         </>
-    );
+    )
 }
