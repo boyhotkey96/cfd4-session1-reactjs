@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-export default function State() {
+export default function Statetest() {
 
     // Khai báo một biến trạng thái mới đặt tên là "count"
     const [count = 3, setCount] = useState({

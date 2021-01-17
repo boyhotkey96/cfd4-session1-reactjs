@@ -1,25 +1,27 @@
 import React, { useState, useRef } from 'react'
 
-export default function ForRef() {
-    let countRef = useRef();
+export default function Forwardref() {
     let inputRef = useRef();
+    let countRef = useRef();
     
-    function setValue() {
-        countRef.current.style.backgroundColor = 'pink';
+    function setBg() {
         countRef.current.style.color = 'blue';
+        countRef.current.style.backgroundColor = 'pink';
+        inputRef.current.value = 5;
     }
 
     return (
         <>
-             <input type="number" style={{padding: 10}} ref={inputRef} />
-             <br />
+            <input type="number" style={{padding: 10}} ref={inputRef} />
+            <br />
             <CountRef step={inputRef} ref={countRef} />
-            <button onClick={setValue} style={{fontSize: 24,border:'2px solid black'}}>SetValue</button>
+            <button onClick={setBg} style={{fontSize: 24,border:'2px solid black'}}>SetBackground</button>
         </>
     )
 }
 
-function Count({ step }, cRef) {
+function Count({step, step2, step3}, cRef) {
+    // let { step } = props;
     let [count, setCount] = useState(0);
 
     function increment() {
