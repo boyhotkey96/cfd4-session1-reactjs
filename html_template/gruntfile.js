@@ -1,18 +1,19 @@
-
-//gruntfile.js
+// Gruntfile.js
 module.exports = grunt => {
     // Load all grunt tasks matching the ['grunt-*', '@*/grunt-*'] patterns
     require('load-grunt-tasks')(grunt);
-    
+ 
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+    	pkg: grunt.file.readJSON('package.json'),
     	dirs: {
     		dest: 'dest',
             css:  "css",
             scss: "scss",
             js: "js"
         },
-        uglify: {
+
+        // minify / uglify js
+		uglify: {
 		    my_target: {
 		      	files: {
 		        	'<%= dirs.dest %>/jsmain.min.js': ['<%= dirs.js %>/libs/*.js']
@@ -28,26 +29,27 @@ module.exports = grunt => {
 					'<%= dirs.dest %>/stylelibs.min.css' : ['<%= dirs.css %>/**/*.css']
 				}]
 			}
-        },
-        sass: {
+		},
+		sass: {
 		    dist: {
 		    	options: {                       
 		        	style: 'compressed',
 		        	sourcemap: false,
-		        	lineNumbers: true
+		        	lineNumbers: false
 		      	},
 			    files: {
 			       	'<%= dirs.dest %>/style.min.css': '<%= dirs.scss %>/style.scss'
 			    }
 		    }
 		},
-        watch: {
+
+		watch: {
 			options: {
 			    livereload: true,
 			    spawn: false
 			},
 	      	sass: {
-		        files: "<%= dirs.scss %>/**/**/*.scss",
+		        files: "<%= dirs.scss %>/**/*.scss",
 		        tasks: ['sass']
 		    },
 		    // cssmin: {
@@ -58,8 +60,9 @@ module.exports = grunt => {
 		    //     files: ['<%= dirs.js %>/*.js'],
 		    //     tasks: ['uglify']
 		    // },
-        },
-        browserSync: {
+	    },
+
+	    browserSync: {
             dev: {
                 bsFiles: {
                     src : [
@@ -75,14 +78,12 @@ module.exports = grunt => {
                 },
             }
         }
-    });
+	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-import-js');
-	grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-browser-sync');
     grunt.registerTask('default', ['browserSync','watch']);
-  
 };

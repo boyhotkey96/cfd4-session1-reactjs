@@ -36,7 +36,7 @@
 }
 
 @mixin minW($args) {
-	@media (max-width: $args) {
+	@media (min-width: $args) {
 		@content;
 	}
 }
@@ -101,6 +101,14 @@
 	-o-animation: #{$str};
 	animation: #{$str};
 }
+@mixin animation-delay($str) {
+	-webkit-animation-delay: #{$str};
+	-moz-animation-delay: #{$str};
+	-ms-animation-delay: #{$str};
+	-o-animation-delay: #{$str};
+	animation-delay: #{$str};
+}
+
 @mixin transform($args) {
 	transform: $args;
 	-webkit-transform: $args;
@@ -138,7 +146,6 @@
 	position: absolute;
 }
 
-
 @mixin midflex() {
 	display: flex;
 	align-items: center;
@@ -169,6 +176,7 @@
 }
 
 @mixin overtext($args) {
+	text-overflow: ellipsis;
 	display: -webkit-inline-box;
 	-webkit-line-clamp: $args;
 	-webkit-box-orient: vertical;
@@ -177,12 +185,23 @@
 
 @mixin custom-scrollbar {
 	&::-webkit-scrollbar {
-		width: 4px;
+		width: 6px;
 	}
 	&::-webkit-scrollbar-track {
-		background: $black-cl;
+		background: #fff;
 	}
 	&::-webkit-scrollbar-thumb {
-		background: #2b2b2b;
+		background: #b2b2b2;
+		border-radius: 50px;
+	}
+}
+
+@mixin transition-default() {
+	@include transition(all 0.4s);
+}
+
+@mixin fullpage() {
+	@media (max-width: 1439.9px) and (max-height: 700px) {
+		height: calc(100vh - 70px);
 	}
 }

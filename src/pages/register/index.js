@@ -16,8 +16,8 @@ export default function Register() {
       // let val = e.target.value;
       // let name = e.target.getAttribute('name');
 
-      // form[e.target.getAttribute('name')] = e.target.value;
-      setForm({...form, [e.target.getAttribute('name')]: e.target.value});
+      form[e.target.getAttribute('name')] = e.target.value;
+      setForm({...form});
 
       let {username, phone, ...rest} = form;
       console.log(rest);

@@ -1,325 +1,301 @@
-const imgWrap = document.querySelector(".slider");
-if (imgWrap != null) {
-  var imgSlide = new Flickity(imgWrap, {
-    cellAlign: "left",
-    freeScroll: true,
-    contain: true,
-    prevNextButtons: false,
-    lazyLoad: 1,
-    pageDots: false,
-  });
-}
-const clickTab = () => {
-  const tabs = document.querySelectorAll(".tab__title a");
-  let newsList = document.querySelectorAll(".tab__content > *");
-  tabs.forEach((e, i) => {
-    e.addEventListener("click", function (k) {
-      k.preventDefault();
-      document
-        .querySelector(".js-tab-active")
-        .classList.remove("js-tab-active");
-      e.classList.add("js-tab-active");
-
-      //style tab
-      let content = newsList[i];
-      let c = document.querySelector(".tabct.active");
-      c.classList.remove("active");
-      c.style.display = "none";
-      content.classList.add("active");
-      content.style.display = "block";
-    });
-  });
-};
-const clickMenu = () => {
-  const btnMenu = document.querySelector(".menu");
-  const body = document.getElementsByTagName("body")[0];
-  btnMenu.addEventListener("click", (e) => {
-    e.stopPropagation();
-    body.classList.toggle("menu-is-show");
-    if (body.classList.contains("menu-is-show")) {
-      document.getElementsByTagName("main")[0].style.marginLeft = "250px";
-      body.style.overflow = "hidden";
+// detect 
+var mdDetect = new MobileDetect(window.navigator.userAgent);
+function isMobile() {
+    if ($(window).width() <= sizeScreenMobile || mdDetect.phone() !== null) {
+        return true;
     } else {
-      document.getElementsByTagName("main")[0].style.marginLeft = "0";
-      body.removeAttribute("style");
+        return false;
     }
-  });
-  body.addEventListener("click", () => {
-    if (body.classList.contains("menu-is-show")) {
-      document.getElementsByTagName("main")[0].style.marginLeft = "250px";
-    } else {
-      document.getElementsByTagName("main")[0].style.marginLeft = "0";
-    }
-  });
-};
-const imgComment = document.querySelector('.images');
-if( imgComment !=null)
-{
-  var imgSlide = new Flickity(imgComment, {
-    cellAlign: "left",
-    draggable: false,
-    prevNextButtons: false,
-    freeScroll: true,
-    wrapAround: true,
-    lazyLoad: 1,
-    on: {
-      ready: function() {
-          let dotted = document.querySelector('.flickity-page-dots'),
-              paging = document.querySelector('.comment .list-dots');
-              paging.appendChild(dotted);
-      }
-    }
-  });
-  let crIndex =0;
-  const btnNext = document.querySelector('.comment .button__right');
-  const btnPrev = document.querySelector('.comment .button__left');
-  const lstText = document.querySelectorAll('.text .text-item');
-  const textMove = (i) => {
-    let textCr = lstText[crIndex];
-    let nextText = lstText[i];
-
-    textCr.classList.remove('js-comment-active');
-    nextText.classList.add('js-comment-active');
-
-    crIndex = i;
-  };
-  btnNext.addEventListener('click',function(){
-    imgSlide.next();
-    if(crIndex <lstText.length-1)
-    {
-      textMove(crIndex+1);
-    }
-    else{
-      textMove(0);
-    }
-  })
-  btnPrev.addEventListener('click',function(){
-    imgSlide.previous();
-    if(crIndex >0)
-    {
-      textMove(crIndex-1);
-    }
-    else{
-      textMove(lstText.length-1);
-    }
-  })
-}
-clickMenu();
-clickTab();
-
-// https://www.cfdtraining.vn/api/danh-sach-khoa-hoc
-// https://www.cfdtraining.vn/api/contact: POST - name, phone, email, title, content
-// https://www.cfdtraining.vn/api/cap-nhat-thong-tin-ca-nhan: POST - name, phone, email, facebook
-// https://www.cfdtraining.vn/api/dang-ky-khoa-hoc : POST - name, phone, email, facebook
-// https://www.cfdtraining.vn/api/dang-nhap : POST - username, password
-// https://www.cfdtraining.vn/api/hoc-vien-khoa-hoc: GET
-
-function api(url) {
-  return {
-    get: function () {
-      return fetch(url).then((res) => res.json());
-    },
-    post: function (params) {
-      return fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        ...params,
-      }).then((res) => res.json());
-    },
-  };
 }
 
-async function dangnhap() {
-  let username = "ngothanhlong";
-  let password = "123123";
-
-  let res = await api("https://www.cfdtraining.vn/api/dang-nhap").post({
-    body: JSON.stringify({
-      username,
-      password,
-    }),
-  });
+function isDesktop() {
+    if (mdDetect.mobile() == null && mdDetect.phone() == null && mdDetect.tablet() == null) {
+        return true;
+    }
 }
 
-async function render() {
-  let res = await api(
-    "https://www.cfdtraining.vn/api/danh-sach-khoa-hoc"
-  ).get();
-  let htmlOnline ='';
-  let htmlOffline ='';
-  for (let i in res) {
-      let thubnail = JSON.parse(res[i].thubnail);
-      let card = `
-      <div class="col-md-4 course__item">
-        <div class="course__item-img">
-          <img src="https://www.cfdtraining.vn/${thubnail.link}" alt="alter">
-        </div>
-        <div class="course__item-info">
-          <div class="course__item-wrap">
-            <h2 class="course__item-title">
-              ${res[i].title}
-            </h2>
-            <p class="course__item-des">
-              ${res[i].short_description}
-            </p>
-          </div>
-          <div class="course__item-details">
-            <div class="teacher">
-              <div class="avatar">
-                <img src="img/avt.png" alt="">
-              </div>
-              <div class="name">
-                  ${res[i].cfd_teacher[0].title}
-              </div>
-            </div>
-            <a href="#" class="btn btn-register">Đăng ký</a>
-          </div>
-        </div>
-      </div>`;
-      if(res[i].course_type == "offline")  
-      {
-        htmlOffline+= card;
-      }
-      else {
-        htmlOnline+= card;
-      }
 
-  }
-  document.querySelector(
-    ".section.online .row"
-  ).innerHTML = htmlOnline;
-  document.querySelector('.section.offline .row').innerHTML = htmlOffline;
-}
-async function contact() {
-    let name="long"
-    let phone="0774156258"
-    let email ="ngobi0617@gmail.com"
-    let title = "asldaskdas"
-    let content = "asdjaksjdklawioudoajsdasd"
+function homePage() {
+    if ($('#main.homepage').length === 0) return;
 
-    let res = await api("https://www.cfdtraining.vn/api/contact")
-    .post({
-        body: JSON.stringify({
-            name,
-            phone,
-            email,
-            title,
-            content
-          }),
+    function teamSlider() {
+        let $carouselGallery = $(".homepage .section-gallery .list"),
+            $progressBar = $('.homepage .section-gallery .timeline .process');
+
+        $carouselGallery.flickity({
+            contain: true,
+            wrapAround: false,
+            freeScroll: true,
+            cellAlign: 'left',
+            lazyLoad: 3,
+            imagesLoaded: true,
+            prevNextButtons: false
+        });
+        // var flkty = $carousel.data('flickity');
+        // var $imgs = $('.homepage .section-4 .list .carousel-cell img');
+
+        // $carousel.on('scroll.flickity', function (event, progress) {
+        //     flkty.slides.forEach(function (slide, i) {
+        //         var img = $imgs[i];
+        //         var x = (slide.target + flkty.x) * -1 / 14;
+        //         img.style.transform = 'translateX( ' + x + 'px)';
+        //     });
+        // });
+
+        $carouselGallery.on('scroll.flickity', function (event, progress) {
+            progress = Math.max(0.05, Math.min(1, progress));
+            $progressBar.width(progress * 100 + '%');
+        });
+
+        let ctrPrevGallery = $('.homepage .section-gallery .btn_ctr.prev'),
+            ctrNextGallery = $('.homepage .section-gallery .btn_ctr.next');
+
+        ctrPrevGallery.on('click', function () {
+            $carouselGallery.flickity('previous');
+        });
+        ctrNextGallery.on('click', function () {
+            $carouselGallery.flickity('next');
+        });
+    }
+
+    teamSlider();
+
+    function jarallax() {
+        $('.jarallax').jarallax({
+            speed: 0.7
+        });
+    }
+    jarallax();
+
+
+    // $('#video-intro').on('load', function () {
+    //     frames[0].document.head.appendChild('<style>.ytp-scroll-min{display: none;}</style>');
+    // })
+    let videoIntroWrap = $('.section-different .videodif'),
+        videoPopup = $('#popup-video .video-src'),
+        src = videoIntroWrap.data('src');
+    videoIntroWrap.click(function (e) {
+        e.stopPropagation();
+        videoPopup.html('<video controls autoplay loop><source src="' + src + '" type="video/mp4">Your browser does not support the video tag.</video>');
+        setTimeout(() => {
+            $('#popup-video').fadeIn(200)
+        }, 200);
     });
-}
 
-function update(name,phone,email,facebook){
-    fetch("https://www.cfdtraining.vn/api/cap-nhat-thong-tin-ca-nhan",{
-        method:"POST",
-        headers:{
-            'Content-Type':'application/json'
-        },
-        body: JSON.stringify({
-            name : name,
-            phone :phone,
-            email : email,
-            facebook : facebook
-        })
-    })
-    .then(res => res.json())
-}
-function dangky(){
-    let name="long"
-    let phone="0774156258"
-    let email ="ngobi0617@gmail.com"
-    let facebook = "asdasdasdasd"
-
-    fetch("https://www.cfdtraining.vn/api/dang-ky-khoa-hoc",{
-        method:"POST",
-        headers:{
-            'Content-Type' : 'application/json'
-        },
-        body: JSON.stringify({
-            name,
-            phone,
-            email,
-            facebook
-        })
-    })
-    .then(res => res.json())
-}
-function getInfo(){
-    fetch("https://www.cfdtraining.vn/api/hoc-vien-khoa-hoc",{
-        method:"GET"
-    })
-    .then(res=>res.json())
-    .then(res=>console.log(res));
-}
-function validateEmail(email) {
-  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
-
-function validate (name,phone,email,facebook,error) {
-  let message = [];
-  if(name==="" ||name ==null)
-  {
-    message.push("Ten khong duoc bo trong ");
-  }
-  if(phone.value <=0 || phone.value >=11)
-  {
-    message.push("So dien thoai khong dung dinh dang");
-  }
-  if(validateEmail(email) == null)
-  {
-    message.push("Email khong dung dinh dang");
-  }
-  if(facebook.value === '' || facebook ==null)
-  {
-    message.push("Link fb khong duoc bo trong ");
-  }
-  if(message.length > 0)
-  {
-    error.innerHTML = message.join(','); 
-    return false;
-  }
-  return true;
-}
-const btnSmUpdate = document.querySelector('.tab__content-1 .btn-save');
-if(btnSmUpdate != null) {
-  btnSmUpdate.addEventListener('click',function(e){
-    e.preventDefault();
-    let name= document.getElementById('txtName').value;
-    let phone=document.getElementById('txtPhone').value;
-    let email =document.getElementById('txtEmail').value;
-    let facebook = document.getElementById('txtFacebook').value;
-    let error = document.getElementById('error');
-    if(validate(name,phone,email,facebook,error))
-    {
-      update(name,phone,email,facebook);
+    function closePopupVideo() {
+        videoPopup.html('');
+        $('#popup-video').fadeOut(200);
     }
-    else {
-      alert('Khong thanh cong');
+    $('#popup-video .close').on('click', function () {
+        closePopupVideo();
+    });
+
+    $(document).keyup(function (e) {
+        if (e.key === "Escape") {
+            closePopupVideo();
+        }
+    });
+
+    // load video background
+    function loadVideoBG() {
+        let videoBgWrap = $('.banner .video-bg'),
+            srcVideoBg = videoBgWrap.data('src');
+        setTimeout(function () {
+            videoBgWrap.html('<video autoplay loop muted><source src="' + srcVideoBg + '" type="video/mp4">Your browser does not support the video tag.</video>')
+        }, 800);
     }
+    if (isDesktop()) {
+        loadVideoBG();
+    }
+
+    // $('.video').click(function () {
+    //     $('.btn-video-intro').fadeIn(200);
+    //     $('#video-intro')[0].contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
+    // })
+
+    $('.icon-scrolldown').on('click', function () {
+        $('html').animate({
+            scrollTop: $('.banner').next().offset().top,
+        }, 300)
+    })
+
+    // $('#video-intro')[0].contentWindow.postMessage('{"event":"command","func":"' + 'function(){console.log(1)}' + '","args":""}', '*');
+
+    // $('a.stop-video').click(function(){
+    //     $('.youtube-video')[0].contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
+    // });
+
+    // $('a.pause-video').click(function(){
+    //     $('.youtube-video')[0].contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
+    // });
+}
+
+function profilePage() {
+    function profileTabClick() {
+        $('.profile .tab-title a').on('click', function (e) {
+            e.preventDefault();
+            let i = $(this).index();
+            $(this).addClass('active').siblings().removeClass('active');
+            $('.profile .tab-content > *:eq(' + i + ')').css({
+                display: 'block'
+            }).siblings().css({
+                display: 'none'
+            })
+        })
+    }
+    profileTabClick();
+}
+
+function courseDetailAccordion() {
+    $('.accordion .accordion__title').on('click', function (e) {
+        e.preventDefault();
+        // $(this).closest('.accordion').siblings('.active').removeClass('active')
+        $(this).next().stop().slideToggle(200);
+
+        let $accordion = $(this).closest('.accordion');
+        if ($accordion.hasClass('active')) {
+            $accordion.removeClass('active')
+        } else {
+            $accordion.addClass('active')
+        }
+        $(this).closest('.accordion').siblings('.active').removeClass('active').find('.content').stop().slideUp(200);
+    })
+}
+courseDetailAccordion();
+
+
+function coursePage() {
+    if ($('#main.course-detail').length === 0) return;
+    $('.banner .video').on('click', function () {
+        $('html').animate({
+            scrollTop: $('.course-detail .section-2').offset().top - 60
+        }, 300)
+    })
+}
+
+
+
+$(document).ready(function () {
+
+    homePage();
+    profilePage();
+    coursePage();
+
+
+    $('.popup-login .close').on('click', function () {
+        $('.popup-login').fadeOut(200)
+    })
+
+    $('.btn-open-login').on('click', function () {
+        $('.popup-login').fadeIn(200)
+    })
+
+    $('.select .head').on('click', function (e) {
+        e.stopPropagation();
+        let $select = $(this).closest('.select');
+        $select.find('.sub').fadeToggle(200, function () {
+            if ($select.hasClass('active')) {
+                $select.removeClass('active');
+            } else {
+                $select.addClass('active')
+            }
+        });
+    })
+
+    $('.select .sub a').on('click', function (e) {
+        e.preventDefault();
+        let value = $(this).text();
+        $(this).closest('.select').find('.head').text(value);
+        $(this).closest('.select').find('.sub').fadeOut(200);
+    });
+
+
+
+    $('body').on('click', function () {
+        $('.select.active .sub').fadeOut(200);
+        $('.select sub').fadeOut(200);
+    })
+
+    $('.menu-hambeger').on('click', function () {
+        $('body').toggleClass('menu-is-show');
+    });
+
+    $('#header nav ul').on('click', function (e) {
+        e.stopPropagation();
+    })
+    $('.overlay_nav').on('click', function (e) {
+        $('body').removeClass('menu-is-show');
+    });
+
+    $(document).keyup(function (e) {
+        if (e.key === "Escape") {
+            $('body').removeClass('menu-is-show');
+        }
+    });
+
+
+    function copyToClipboard(copyText) {
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+        document.execCommand("copy");
+    }
+
+    $('.affiliate_token .copy').on('click', function () {
+        var textToken = document.getElementById("tokenlink");
+        copyToClipboard(textToken);
+        $(this).html('Đã Copy')
+    });
+
+    $('.back-to-top').on('click', function () {
+        $('html').animate({
+            scrollTop: 0
+        }, 300)
+    });
+
+
+    function testimonialSlider() {
+        if ($('.section-testimonial').length) {
+            var $carousel = $(".section-testimonial .images .list").flickity({
+                contain: true,
+                wrapAround: false,
+                freeScroll: false,
+                cellAlign: 'center',
+                lazyLoad: 2,
+                imagesLoaded: true,
+                prevNextButtons: false,
+                on: {
+                    ready: function () {
+                        let dotsSlideTes = $('.section-testimonial .flickity-page-dots');
+                        let dotsNew = $('.section-testimonial .dots');
+                        dotsSlideTes.appendTo(dotsNew);
+                    },
+                    change: function (index) {
+                        $('.testimonial .ct').removeClass('active');
+                        $('.testimonial .ct-' + (index + 1)).addClass('active');
+                    }
+                }
+            });
+            var flkty = $carousel.data('flickity');
+            var $imgs = $('.section-testimonial .carousel-cell picture img');
+
+            $carousel.on('scroll.flickity', function (event, progress) {
+                flkty.slides.forEach(function (slide, i) {
+                    var img = $imgs[i];
+                    var x = (slide.target + flkty.x) * -1 / 2;
+                    img.style.transform = 'translateX( ' + x + 'px)';
+                });
+            });
+
+            let ctrPrevTes = $('.section-testimonial .btn_ctr.prev'),
+                ctrNextTes = $('.section-testimonial .btn_ctr.next');
+
+            ctrPrevTes.on('click', function () {
+                $carousel.flickity('previous', true);
+            });
+            ctrNextTes.on('click', function () {
+                $carousel.flickity('next', true);
+            });
+        }
+    }
+    testimonialSlider();
 })
-}
-
-const btnLogin =document.querySelector('.user .btn-signin');
-if(btnLogin !=null)
-{
-  btnLogin.addEventListener('click',function(e){
-    e.preventDefault();
-    document.querySelector('.popup-signin').removeAttribute("style");
-  })
-  if(document.querySelector('.popup-signin .close')!=null)
-  {
-    document.querySelector('.popup-signin .close').addEventListener('click',function(){
-      document.querySelector('.popup-signin').style.display ="none";
-    })
-  }
-}
-
-
-// dangnhap();
-// render();
-// contact();
-// dangky();
-// getInfo();

@@ -5,23 +5,17 @@ import Header from "../../components/Header.js";
 
 export default function Detail() {
   return (
-    <>
-      {" "}
-      <Header />{" "}
       <main>
-        {" "}
         <div className="banner__course">
           <div className="banner__course--inner">
             <h2>Thực chiến</h2>
             <h2>Front-End Căn Bản</h2>
             <div className="banner__course--info">
               <p className="info">
-                {" "}
                 <span>Khai giảng:</span>
                 12/10/2020
               </p>
               <p className="info">
-                {" "}
                 <span>Thời lượng:</span>
                 18 buổi
               </p>
@@ -37,9 +31,8 @@ export default function Detail() {
             </div>
             <div className="price">4.000.000 VND</div>
           </div>
-        </div>{" "}
+        </div>
         <section className="content__course">
-          {" "}
           <div className="container">
             <div className="info__teach">
               Many Laravel apps don’t warrant the complexity of a full front-end
@@ -232,15 +225,14 @@ export default function Detail() {
                 <span>Chia sẻ</span>
               </div>
             </div>
-          </div>{" "}
+          </div>
         </section>
         <section className="section">
           <div className="container">
             <div className="course">
-              <h2 className="title">Dự án</h2>{" "}
-              <h2 className="type">học viên</h2>{" "}
+              <h2 className="title">Dự án</h2>
+              <h2 className="type">học viên</h2>
               <div className="row">
-                {" "}
                 <div className="col-md-4 course__item">
                   <div className="course__item-img">
                     <img src="/img/img-7.jpg" alt="alter" />
@@ -264,66 +256,59 @@ export default function Detail() {
                       </a>
                     </div>
                   </div>
-                </div>{" "}
+                </div>
                 <div className="col-md-4 course__item">
-                  {" "}
                   <div className="course__item-img">
                     <img src="/img/img-8.jpg" alt="alter" />
-                  </div>{" "}
+                  </div>
                   <div className="course__item-info">
-                    {" "}
                     <div className="course__item-wrap">
                       <h2 className="course__item-title">GboxMB</h2>
                       <p className="course__item-des">
                         One of the best corporate fashion brands in Sydney
                       </p>
-                    </div>{" "}
+                    </div>
                     <div className="course__item-details">
-                      {" "}
                       <div className="teacher">
                         <div className="avatar">
                           <img src="/img/avt.png" alt="" />
                         </div>
                         <div className="name">Trần Nghĩa</div>
-                      </div>{" "}
+                      </div>
                       <a href="#" className="btn btn-register">
-                        {" "}
-                        Website{" "}
+                        Website
                       </a>
-                    </div>{" "}
-                  </div>{" "}
+                    </div>
+                  </div>
                 </div>
                 <div className="col-md-4 course__item">
                   <div className="course__item-img">
-                    <img src="/img/img-9.jpg" alt="alter" />{" "}
-                  </div>{" "}
+                    <img src="/img/img-9.jpg" alt="alter" />
+                  </div>
                   <div className="course__item-info">
-                    {" "}
                     <div className="course__item-wrap">
                       <h2 className="course__item-title">Kymco</h2>
                       <p className="course__item-des">
                         One of the best corporate fashion brands in Sydney
                       </p>
-                    </div>{" "}
+                    </div>
                     <div className="course__item-details">
-                      {" "}
                       <div className="teacher">
                         <div className="avatar">
                           <img src="/img/avt.png" alt="" />
                         </div>
                         <div className="name">Trần Nghĩa</div>
-                      </div>{" "}
+                      </div>
                       <a href="#" className="btn btn-register">
-                        {" "}
-                        Website{" "}
+                        Website
                       </a>
-                    </div>{" "}
-                  </div>{" "}
+                    </div>
+                  </div>
                 </div>
-              </div>{" "}
-            </div>{" "}
+              </div>
+            </div>
           </div>
-        </section>{" "}
+        </section>
         <section className="section related">
           <div className="container">
             <div className="course">
@@ -405,9 +390,7 @@ export default function Detail() {
               </div>
             </div>
           </div>
-        </section>{" "}
+        </section>
       </main>
-      <Footer />{" "}
-    </>
   );
 }

@@ -1,12 +1,12 @@
 /* Core variables and mixins*/
-@import "imports/core/breakpoints";
-@import "imports/core//bootstrap_mini";
 @import "imports/core/reset";
 @import "imports/core/variables";
 @import "imports/core/mixins";
 @import "imports/core/layouts";
+@import "imports/core/bootstrap_mini";
 @import "imports/core/elements";
 @import "imports/core/libs";
+
 @import "imports/core/loading";
 
 /* Navigation, header, footer*/
@@ -17,9 +17,10 @@
 /* Pages*/
 @import "imports/pages/home";
 @import "imports/pages/profile";
-@import "imports/pages/coursedetails";
-@import "imports/pages/register";
+@import "imports/pages/course-detail";
+@import "imports/pages/register-course";
 @import "imports/pages/team";
-@import "imports/pages/payment";
-@import "imports/pages/project";
-
+@import "imports/pages/projectpage";
+@import "imports/pages/paypage";
+@import "imports/pages/notfound";
+@import "imports/pages/faq";

@@ -45,6 +45,7 @@ export default function Header() {
           </li>
         </ul>
       </nav>
+      <div className="overlay_nav"></div>
     </>
   );
 }
