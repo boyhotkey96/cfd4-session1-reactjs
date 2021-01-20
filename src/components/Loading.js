@@ -1,10 +1,13 @@
 import React from 'react'
-import reactDOM from 'react-dom'
+import ReactDOM from 'react-dom'
+import '../assets/css/style.scss'
 
 export default function Loading() {
-    return reactDOM.createPortal(
+    return ReactDOM.createPortal(
         <div className="pageLoading">
-            <div></div>
+            <div>
+
+            </div>
         </div>,
         document.getElementById('modal-root')
     )

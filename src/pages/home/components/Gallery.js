@@ -7,19 +7,19 @@ export default function Gallery() {
                 <h2 className="main-title">Chúng ta là một team</h2>
             </div>
             <div className="list">
-                <img data-flickity-lazyload="img/img_team1.png" alt="" />
-                <img data-flickity-lazyload="img/img_team2.png" alt="" />
-                <img data-flickity-lazyload="img/img_team3.png" alt="" />
-                <img data-flickity-lazyload="img/img_team4.png" alt="" />
-                <img data-flickity-lazyload="img/img_team3.png" alt="" />
-                <img data-flickity-lazyload="img/img_team4.png" alt="" />
-                <img data-flickity-lazyload="img/img_team1.png" alt="" />
-                <img data-flickity-lazyload="img/img_team2.png" alt="" />
-                <img data-flickity-lazyload="img/img_team3.png" alt="" />
-                <img data-flickity-lazyload="img/img_team4.png" alt="" />
-                <img data-flickity-lazyload="img/img_team3.png" alt="" />
+                <img data-flickity-lazyload="/img/img_team1.png" alt="" />
+                <img data-flickity-lazyload="/img/img_team2.png" alt="" />
+                <img data-flickity-lazyload="/img/img_team3.png" alt="" />
+                <img data-flickity-lazyload="/img/img_team4.png" alt="" />
+                <img data-flickity-lazyload="/img/img_team3.png" alt="" />
+                <img data-flickity-lazyload="/img/img_team4.png" alt="" />
+                <img data-flickity-lazyload="/img/img_team1.png" alt="" />
+                <img data-flickity-lazyload="/img/img_team2.png" alt="" />
+                <img data-flickity-lazyload="/img/img_team3.png" alt="" />
+                <img data-flickity-lazyload="/img/img_team4.png" alt="" />
+                <img data-flickity-lazyload="/img/img_team3.png" alt="" />
                 <div className="item carousel-cell">
-                    <img data-flickity-lazyload="img/img_team4.png" alt="" />
+                    <img data-flickity-lazyload="/img/img_team4.png" alt="" />
                 </div>
             </div>
             <div className="controls">

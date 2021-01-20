@@ -1,42 +1,37 @@
 import {
-  BrowserRouter,
-  Route,
-  Switch
+    BrowserRouter,
+    Route,
+    Switch,
+    Redirect
 } from 'react-router-dom'
-import './assets/css/style.scss'
+import './App.css';
+import Header from './components/Header.js'
+import Footer from './components/Footer.js'
 import Home from './pages/home';
-import Detail from './pages/detail';
+import Profile from './pages/profile'
+import Detail from './pages/detail'
+import Page404 from './pages/page404'
 import Register from './pages/register';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Project from './pages/project';
-import Profile from './pages/profile';
-import Page404 from './pages/page404';
-import Demo from './pages/demo';
-import PopupLogin from './components/PopupLogin';
-import Loading from './components/Loading';
+import Demohook from './pages/hook/';
+import State from './pages/hook/State-test.js';
+import Forwardref from './pages/hook/Forwardref.js';
+import Forwardreftest from './pages/hook/Forwardref-test.js';
+import Loading from './components/Loading.js';
 
 function App() {
-  return <BrowserRouter>
-    <Header />
-    <Loading />
-    <Switch>
-      <Route path="/thong-tin-ca-nhan" component={Profile} />
-      <Route path="/chi-tiet/:id">
-        <Detail />
-      </Route>
-      <Route path="/" exact >
-        <Home />
-      </Route>
-      <Route>
-        <Page404 />
-      </Route>
-    </Switch>
-
-    <Footer />
-  </BrowserRouter>;
-  // return <Register />;
-
+    return <BrowserRouter>
+        <Header />
+        <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/thong-tin-ca-nhan" component={Profile} />
+            <Route path="/chi-tiet/:id" component={Detail} />
+            <Route path="/dang-ky" component={Register} />
+            <Route component={Page404} />
+            {/* <Redirect from='*' to='/404' /> */}
+        </Switch>
+        <Footer />
+        <Loading />
+    </BrowserRouter>
 }
 
 export default App;
