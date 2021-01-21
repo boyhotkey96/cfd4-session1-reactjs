@@ -1,16 +1,47 @@
+import React, { useState, useEffect, useReducer } from "react";
 import { CircularProgress } from "@material-ui/core";
-import React, { useState } from "react";
-import useFormValidates from "../../hook/formValidate";
 
 const style = {
   inputError: { color: "red", fontSize: 14 },
 };
 
-export default function Register() {
-  let [loading, setLoading] = useState(false);
+function Reducer(state, action) {
+  console.log("reducer:", state);
+  switch (action.type) {
+    case "FORM_INPUT_CHANGE":
+      return {
+        ...state,
+        form: action.form,
+      };
+    case "LOADING":
+      return {
+        ...state,
+        loading: action.loading,
+      };
+    case "ERROR":
+      return {
+        ...state,
+        error: action.error,
+      };
+  }
+  return state;
+}
 
-  let { form, error, inputChange, submit } = useFormValidates(
-    {
+export default function Register() {
+  //   let [loading, setLoading] = useState(false);
+
+  //   let [form, setForm] = useState({
+  //     username: "",
+  //     phone: "",
+  //     email: "",
+  //     facebook: "",
+  //     payment: "chuyển khoản",
+  //     note: "",
+  //   });
+
+  let [state, dispatch] = useReducer(Reducer, {
+    loading: false,
+    form: {
       username: "",
       phone: "",
       email: "",
@@ -18,48 +49,79 @@ export default function Register() {
       payment: "chuyển khoản",
       note: "",
     },
-    {
-      rule: {
-        username: {
-          required: true,
-        },
-        phone: {
-          pattern: "phone",
-          required: true,
-        },
-        email: {
-          pattern: "email",
-          required: true,
-        },
-        facebook: {
-          pattern: "url",
-          required: true,
-        },
-      },
-      // message: {
-      //   username: {
-      //     required: "Họ và tên không được để trống",
-      //   },
-      //   phone: {
-      //     pattern: "Số điện thoại không đúng định dạng",
-      //   },
-      //   email: {
-      //     pattern: "Email không đúng định dạng",
-      //   },
-      //   facebook: {
-      //     pattern: "Facebook url không đúng định dạng",
-      //   },
-      // },
-    }
-  );
+    error: {},
+  });
 
-  function btnSubmit() {
-    let error = submit();
-    console.log(error);
-    if (Object.keys(error).length === 0) {
-      setLoading(true);
+  //   useEffect(() => {
+  //     function windowClick() {
+  //     //   console.log("window click form", state.form);
+  //     }
+  //     window.addEventListener("click", windowClick);
+  //     return () => {
+  //       console.log("window click destroy");
+  //       window.removeEventListener("click", windowClick);
+  //     };
+  //   }, [state.form]);
+
+  //   let [error, setError] = useState({});
+
+  function inputChange(e) {
+    // let val = e.target.value;
+    // let name = e.target.getAttribute('name');
+
+    // state.form[e.target.getAttribute("name")] = e.target.value;
+    // state.setForm({ ...state.form });
+
+    dispatch({
+      type: "FORM_INPUT_CHANGE",
+      form: {
+        ...state.form,
+        [e.target.getAttribute("name")]: e.target.value,
+      },
+    });
+
+    //   let {username, phone, ...rest} = form;
+    //   console.log(rest);
+  }
+
+  function submitBtnClick() {
+    if (state.loading) {
+      alert("Bạn không thể gửi liên tục");
+      return;
+    }
+    let errors = {};
+    let regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let regexUrlFacebook = /(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/;
+    let regexPhone = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+
+    if (!state.form.username) {
+      errors["username"] = "Username không được để trống";
+    }
+    if (!state.form.phone) {
+      errors["phone"] = "Số điện thoại không được để trống";
+    } else if (!regexPhone.test(state.form.phone)) {
+      errors["phone"] = "Số điện thoại không chính xác";
+    }
+    if (!state.form.email) {
+      errors["email"] = "Email không được để trống";
+    } else if (!regexEmail.test(state.form.email)) {
+      errors["email"] = "Email không đúng định dạng";
+    }
+    if (!state.form.facebook) {
+      errors["facebook"] = "Facebook không được để trống";
+    } else if (!regexUrlFacebook.test(state.form.facebook)) {
+      errors["facebook"] = "Facebook không đúng định dạng";
+    }
+
+    // state.setError(state.error);
+    dispatch({ type: "ERROR", error: errors });
+
+    if (Object.keys(errors).length === 0) {
+      //   state.setLoading(true);
+      dispatch({ type: "LOADING", loading: true });
       setTimeout(() => {
-        setLoading(false);
+        // state.setLoading(false);
+        dispatch({ type: "LOADING", loading: false });
         alert("Đăng ký thành công");
       }, 1000);
     }
@@ -94,12 +156,12 @@ export default function Register() {
                     placeholder="Họ và tên bạn"
                     onChange={inputChange}
                     name="username"
-                    value={form.username}
+                    value={state.form.username}
                   />
                 </label>
-                {error.username && (
+                {state.error.username && (
                   <p className="error" style={style.inputError}>
-                    {error.username}
+                    {state.error.username}
                   </p>
                 )}
                 <label>
@@ -111,12 +173,12 @@ export default function Register() {
                     placeholder="Số điện thoại"
                     onChange={inputChange}
                     name="phone"
-                    value={form.phone}
+                    value={state.form.phone}
                   />
                 </label>
-                {error.phone && (
+                {state.error.phone && (
                   <p className="error" style={style.inputError}>
-                    {error.phone}
+                    {state.error.phone}
                   </p>
                 )}
                 <label>
@@ -128,12 +190,12 @@ export default function Register() {
                     placeholder="Email của bạn"
                     onChange={inputChange}
                     name="email"
-                    value={form.email}
+                    value={state.form.email}
                   />
                 </label>
-                {error.email && (
+                {state.error.email && (
                   <p className="error" style={style.inputError}>
-                    {error.email}
+                    {state.error.email}
                   </p>
                 )}
                 <label>
@@ -145,12 +207,12 @@ export default function Register() {
                     placeholder="https://facebook.com"
                     name="facebook"
                     onChange={inputChange}
-                    value={form.facebook}
+                    value={state.form.facebook}
                   />
                 </label>
-                {error.facebook && (
+                {state.error.facebook && (
                   <p className="error" style={style.inputError}>
-                    {error.facebook}
+                    {state.error.facebook}
                   </p>
                 )}
                 <label className="disable">
@@ -180,12 +242,12 @@ export default function Register() {
                     placeholder="Mong muốn cá nhân và lịch bạn có thể học."
                     onChange={inputChange}
                     name="note"
-                    value={form.note}
+                    value={state.form.note}
                   />
                 </label>
-                <div className="btn main rect" onClick={btnSubmit}>
+                <div className="btn main rect" onClick={submitBtnClick}>
                   đăng ký
-                  {loading && (
+                  {state.loading && (
                     <CircularProgress size={20} style={{ marginLeft: 20 }} />
                   )}
                 </div>

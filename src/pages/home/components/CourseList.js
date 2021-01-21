@@ -15,34 +15,58 @@ export default function CourseList() {
           </div>
           <div className="list row">
             <Course
-              title="Front-end căn bản"
-              des="One of the best corporate fashion brands in Sydney"
-              thumbnail="/img/img-1.jpg"
+              title="CFD5 React JS"
+              des="Khóa học thực chiến Javascript, ES6, JSON, API và React JS, Redux."
+              thumbnail="/img/img-course-advance.jpg"
+              opening="sắp khải giảng"
+              openingcolor="#5a46ff"
+              avatar="/img/avt2.jpg"
+              nameteacher="Đặng Vương"
             />
             <Course
-              title="Reactjs"
-              des="One of the best corporate fashion brands in Sydney"
-              thumbnail="/img/img-2.jpg"
+              title="CFD5 Web Responsive"
+              des="Khóa học thực chiến dự án gồm HTML, CSS, CSS3, SCSS, Responsive với Media Query, Boostrap 4, Grunt, JS, jQuery."
+              thumbnail="/img/img-course-basic.jpg"
+              opening="sắp khải giảng"
+              openingcolor="#5a46ff"
+              avatar="/img/avt.png"
+              nameteacher="Trần Nghĩa"
             />
             <Course
-              title="PHP"
-              des="One of the best corporate fashion brands in Sydney"
-              thumbnail="/img/img-3.jpg"
+              title="CFD4 Web Responsive"
+              des="Khóa học thực chiến dự án gồm HTML, CSS, CSS3, SCSS, Responsive với Media Query, Boostrap 4, Grunt, JS, jQuery."
+              thumbnail="/img/img-course-basic.jpg"
+              opening="đang diễn ra"
+              openingcolor="#f4744b"
+              avatar="/img/avt.png"
+              nameteacher="Trần Nghĩa"
             />
             <Course
-              title="Nodejs"
-              des="One of the best corporate fashion brands in Sydney"
-              thumbnail="/img/img-4.jpg"
+              title="CFD4 React JS"
+              des="Khóa học thực chiến Javascript nâng cao, ES6, JSON, API và React JS."
+              thumbnail="/img/img-course-advance.jpg"
+              openingcolor="#f4744b"
+              opening="đang diễn ra"
+              avatar="/img/avt2.jpg"
+              nameteacher="Đặng Vương"
             />
             <Course
-              title="React Native"
-              des="One of the best corporate fashion brands in Sydney"
-              thumbnail="/img/img-5.jpg"
+              title="CFD3 React JS"
+              des="Khóa học thực chiến Javascript nâng cao, ES6, JSON, API và React JS."
+              thumbnail="/img/img-course-advance.jpg"
+              opening="đã kết thúc"
+              openingcolor="#797979"
+              avatar="/img/avt2.jpg"
+              nameteacher="Đặng Vương"
             />
             <Course
-               title="Java"
-               des="One of the best corporate fashion brands in Sydney"
-               thumbnail="/img/img-6.jpg"
+              title="CFD3 Web Responsive"
+              des="Khóa học thực chiến dự án gồm HTML, CSS, CSS3, SCSS, Responsive với Media Query, Boostrap 4, Grunt, JS, jQuery."
+              thumbnail="/img/img-course-basic.jpg"
+              opening="đã kết thúc"
+              openingcolor="#797979"
+              avatar="/img/avt.png"
+              nameteacher="Trần Nghĩa"
             />
           </div>
         </div>
@@ -54,19 +78,31 @@ export default function CourseList() {
           </div>
           <div className="list row">
             <Course
-              name="Animation"
-              description="One of the best corporate fashion brands in Sydney"
-              thumbnail="/img/img1.png"
+              title="CFD4 React JS"
+              des="Khóa học thực chiến Javascript nâng cao, ES6, JSON, API và React JS."
+              thumbnail="/img/img-course-advance.jpg"
+              openingcolor="#f4744b"
+              opening="đang diễn ra"
+              avatar="/img/avt2.jpg"
+              nameteacher="Đặng Vương"
             />
             <Course
-              name="Reactjs"
-              description="ABC"
-              thumbnail="/img/img2.png"
+              title="CFD3 React JS"
+              des="Khóa học thực chiến Javascript nâng cao, ES6, JSON, API và React JS."
+              thumbnail="/img/img-course-advance.jpg"
+              opening="đã kết thúc"
+              openingcolor="#797979"
+              avatar="/img/avt2.jpg"
+              nameteacher="Đặng Vương"
             />
             <Course
-              name="Căn bản"
-              description="XZY"
-              thumbnail="/img/img3.png"
+              title="CFD3 Web Responsive"
+              des="Khóa học thực chiến dự án gồm HTML, CSS, CSS3, SCSS, Responsive với Media Query, Boostrap 4, Grunt, JS, jQuery."
+              thumbnail="/img/img-course-basic.jpg"
+              opening="đã kết thúc"
+              openingcolor="#797979"
+              avatar="/img/avt.png"
+              nameteacher="Trần Nghĩa"
             />
           </div>
           <div className="text-deco">C</div>

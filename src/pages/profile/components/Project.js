@@ -1,8 +1,10 @@
 import React from "react";
+import { Prompt } from "react-router-dom";
 
 export default function Project() {
   return (
     <div className="tab3">
+      <Prompt message="Bạn chắc chắn muốn rời trang?" />
       <div className="row">
         <div className="col-md-6 course">
           <div className="wrap">

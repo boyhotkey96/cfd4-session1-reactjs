@@ -6,7 +6,7 @@ export default function Course(props) {
       <div className="wrap">
         <a className="cover" href="#">
           <img src={props.thumbnail} alt="" />
-          <span className="badge b1">Đã kết thúc</span>
+          <span className="badge b1" style={{backgroundColor:`${props.openingcolor}`}}>{props.opening}</span>
           <div className="hover">
             <div className="top">
               <div className="user">
@@ -31,11 +31,11 @@ export default function Course(props) {
         <div className="bottom">
           <div className="teacher">
             <div className="avatar">
-              <img src="/img/avt.png" alt="" />
+              <img src={props.avatar} alt="" />
             </div>
-            <div className="name">Trần Nghĩa</div>
+            <div className="name">{props.nameteacher}</div>
           </div>
-          <div className="register-btn">Đăng Ký</div>
+          <div className="register-btn">Chi tiết</div>
         </div>
       </div>
     </div>
