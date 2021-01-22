@@ -1,5 +1,6 @@
 // detect
 var mdDetect = new MobileDetect(window.navigator.userAgent);
+let $ = window.$;
 function isMobile() {
   if ($(window).width() <= sizeScreenMobile || mdDetect.phone() !== null) {
     return true;

@@ -1,20 +1,81 @@
-import React from "react";
+import { CircularProgress } from "@material-ui/core";
+import React, { useState, useRef, useContext } from "react";
 import ReactDOM from "react-dom";
+import { ContextA } from "../App";
+import useFormValidate from "../hook/formValidate";
 
-export default function PopupLogin() {
+function PopupLogin(props, ref) {
+  let context = useContext(ContextA);
+  console.log(ref);
+  let [loading, setLoading] = useState(false);
+  let { form, inputChange, error, submit } = useFormValidate(
+    {
+      username: "",
+      password: "",
+    },
+    {
+      rule: {
+        username: {
+          pattern: "email",
+          required: true,
+        },
+        password: {
+          required: true,
+          min: 6,
+          max: 32,
+        },
+      },
+      // message: {
+      //   username: {
+      //     pattern: "Username không được để trống",
+      //   },
+      //   password: {
+      //     min: "Password phải dài hơn 6 ký tự",
+      //     max: "Password phải ngắn hơn 32 ký tự",
+      //   },
+      // },
+    }
+  );
+
+  function btnSubmit(e) {
+    e.preventDefault();
+    let error = submit();
+    if (Object.keys(error).length === 0) {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        alert("Đăng ký thành công");
+      }, 1000);
+    }
+  }
+
   return ReactDOM.createPortal(
-    <div className="popup-signin" style={{display:"none"}}>
+    <div
+      className="popup-form popup-login"
+      ref={ref}
+      style={{ display: "none" }}
+    >
       <div className="wrap">
         <form id="login">
-          <div className="ct_login">
+          <div className="ct_login" style={{ display: "block" }}>
             <h2 className="title">Đăng nhập</h2>
             <input type="hidden" className="url_post" defaultValue />
             <input
-              name="email"
+              name="username"
+              onChange={inputChange}
+              value={form.username}
               type="text"
               placeholder="Email / Số điện thoại"
             />
-            <input name="password" type="password" placeholder="Mật khẩu" />
+            {error.username && <p className="error-text">{error.username}</p>}
+            <input
+              name="password"
+              type="password"
+              placeholder="Mật khẩu"
+              onChange={inputChange}
+              value={form.password}
+            />
+            {error.password && <p className="error-text">{error.password}</p>}
             <p className="mess-error" id="message_login" />
             <div className="remember">
               <label className="btn-remember">
@@ -31,7 +92,12 @@ export default function PopupLogin() {
                 Quên mật khẩu?
               </a>
             </div>
-            <div className="btn btn-login btn-register">đăng nhập</div>
+            <div className="btn react main btn-login btn-register" onClick={btnSubmit}>
+              đăng nhập
+              {loading && (
+                <CircularProgress size={20} style={{ marginLeft: 20 }} />
+              )}
+            </div>
             <div className="text-register" style={{ fontWeight: 700 }}>
               <strong>Hoặc đăng nhập bằng</strong>
             </div>
@@ -42,7 +108,7 @@ export default function PopupLogin() {
               </div>
               <p className="mess-error" id="message_login_by_g" />
             </div>
-            <div className="close">
+            <div className="close" onClick={context.closePopupLogin}>
               <img src="/img/close-icon.png" alt="" />
             </div>
           </div>
@@ -52,3 +118,5 @@ export default function PopupLogin() {
     document.getElementById("modal-root")
   );
 }
+
+export default React.forwardRef(PopupLogin);

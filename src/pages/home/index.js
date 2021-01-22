@@ -7,7 +7,7 @@ import Gallery from "./components/Gallery";
 import Form from "./components/Form";
 import PopupLogin from "../../components/PopupLogin";
 
-export default function Home() {
+export default function Home(/*props*/) {
   return (
     <main className="homepage" id="main">
       <Banner />
@@ -15,7 +15,7 @@ export default function Home() {
       <Special />
       <Review />
       <Gallery />
-      <Form />
+      <Form /*transmitOpenPopupLogin={props.transmitOpenPopupLogin}*/ />
       <PopupLogin />
     </main>
   );

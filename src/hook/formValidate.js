@@ -40,7 +40,17 @@ export default function useFormValidate(initialValue, validate) {
             message?.[i]?.required || "Trường này không được để trống";
         }
       }
+      if (r.min && form[i]?.length < r.min && form[i]?.length > 0) {
+        errorObject[i] = message?.[i]?.min || `Trường này dài hơn ${r.min} ký tự`
+      }
+      if (r.max && form[i]?.length > r.max) {
+        errorObject[i] = message?.[i]?.max || `Trường này dài hơn ${r.max} ký tự`
+      }
     }
+
+    // for (let i in errorObject) {
+    //   document.querySelector(`[name="${i}"]`).classList.add('error-input');
+    // }
 
     setError(errorObject);
     return errorObject;
