@@ -5,18 +5,22 @@ import { ContextA } from "../App";
 import useFormValidate from "../core/hook/formValidate";
 import { useAuth } from "../core/hook/useAuth";
 
-function PopupLogin(props, ref) {
+function PopupRegister(props, ref) {
   let context = useContext(ContextA);
   let auth = useAuth();
   console.log(ref);
   let [loading, setLoading] = useState(false);
   let { form, inputChange, error, submit } = useFormValidate(
     {
+      name: "",
       username: "",
       password: "",
     },
     {
       rule: {
+        name: {
+          required: true,
+        },
         username: {
           pattern: "email",
           required: true,
@@ -34,7 +38,7 @@ function PopupLogin(props, ref) {
     e.preventDefault();
     let error = submit();
     if (Object.keys(error).length === 0) {
-      fetch("http://cfd-reactjs.herokuapp.com/elearning/v4/login", {
+      fetch("http://cfd-reactjs.herokuapp.com/elearning/v4/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,8 +49,9 @@ function PopupLogin(props, ref) {
         .then((res) => {
           console.log(res.data);
           if (res.data) {
-            auth.loginAction(res.data);
-            context.closePopupLogin()
+            // auth.loginAction(res.data);
+            context.closePopupRegister()
+            context.openPopupLogin()
           }
         });
     }
@@ -61,14 +66,22 @@ function PopupLogin(props, ref) {
       <div className="wrap">
         <form id="login">
           <div className="ct_login" style={{ display: "block" }}>
-            <h2 className="title">Đăng nhập</h2>
+            <h2 className="title">Đăng ký</h2>
             <input type="hidden" className="url_post" defaultValue />
+            <input
+              name="name"
+              onChange={inputChange}
+              value={form.name}
+              type="text"
+              placeholder="Username"
+            />
+            {error.name && <p className="error-text">{error.name}</p>}
             <input
               name="username"
               onChange={inputChange}
               value={form.username}
               type="text"
-              placeholder="Email / Số điện thoại"
+              placeholder="Email"
             />
             {error.username && <p className="error-text">{error.username}</p>}
             <input
@@ -90,16 +103,16 @@ function PopupLogin(props, ref) {
               <a
                 href="javascript:void(0)"
                 className="forget"
-                onClick={context.openPopupRegister}
+                onClick={context.openPopupLogin}
               >
-                Đăng ký
+                Đăng nhập
               </a>
             </div>
             <div
               className="btn react main btn-login btn-register"
               onClick={btnSubmit}
             >
-              đăng nhập
+              đăng ký
               {loading && (
                 <CircularProgress size={20} style={{ marginLeft: 20 }} />
               )}
@@ -114,7 +127,7 @@ function PopupLogin(props, ref) {
               </div>
               <p className="mess-error" id="message_login_by_g" />
             </div>
-            <div className="close" onClick={context.closePopupLogin}>
+            <div className="close" onClick={context.closePopupRegister}>
               <img src="/img/close-icon.png" alt="" />
             </div>
           </div>
@@ -125,4 +138,4 @@ function PopupLogin(props, ref) {
   );
 }
 
-export default React.forwardRef(PopupLogin);
+export default React.forwardRef(PopupRegister);

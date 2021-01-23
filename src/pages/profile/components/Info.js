@@ -1,6 +1,6 @@
 import { CircularProgress } from "@material-ui/core";
 import React, { useState } from "react";
-import useFormValidate from "../../../hook/formValidate";
+import useFormValidate from "../../../core/hook/formValidate";
 
 export default function Info() {
   let [loading, setLoading] = useState(false);

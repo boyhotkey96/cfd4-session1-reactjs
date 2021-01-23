@@ -1,7 +1,7 @@
-import React, { useEffect, useContext,  } from "react";
+import React, { useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { ContextA } from "../App";
-import {useAuth} from '../hook/useAuth'
+import { useAuth } from "../core/hook/useAuth";
 
 export default function Header(/*{ sendOpenPopupLogin }*/) {
   const context = useContext(ContextA);
@@ -94,21 +94,25 @@ export default function Header(/*{ sendOpenPopupLogin }*/) {
                   <Link onClick={delayLink} to="/thong-tin-ca-nhan">
                     Thông tin tài khoản
                   </Link>
-                  <Link onClick={delayLink} to="/">
+                  <a href="javascript:void()" onClick={auth.logout} to="/">
                     Đăng xuất
-                  </Link>
+                  </a>
                 </div>
               </div>
             ) : (
               <div class="not-login bg-none">
                 <a
-                  href
+                  href="javascript:void(0)"
                   class="btn-register"
                   onClick={() => context.openPopupLogin()}
                 >
                   Đăng nhập
                 </a>
-                <a href="login.html" class="btn main btn-open-login">
+                <a
+                  href="javascript:void(0)"
+                  class="btn main btn-open-login"
+                  onClick={context.openPopupRegister}
+                >
                   Đăng ký
                 </a>
               </div>

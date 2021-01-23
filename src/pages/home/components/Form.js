@@ -12,13 +12,13 @@ export default function Form(/*{transmitOpenPopupLogin}*/) {
         </h3>
         <div className="btn main round bg-white">Đăng ký</div>
         <br />
-        <button
+        <a href="javascript:void(0)"
           className="btn main round bg-white"
           onClick={/*transmitOpenPopupLogin*/ context.openPopupLogin}
           style={{ marginTop: 10 }}
         >
           Đăng nhập
-        </button>
+        </a>
       </div>
     </section>
   );

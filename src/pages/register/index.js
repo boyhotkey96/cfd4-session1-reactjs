@@ -1,6 +1,6 @@
 import { CircularProgress } from "@material-ui/core";
 import React, { useState } from "react";
-import useFormValidates from "../../hook/formValidate";
+import useFormValidates from "../../core/hook/formValidate";
 
 const style = {
   inputError: { color: "red", fontSize: 14 },

@@ -6,7 +6,7 @@ import Payment from "./components/Payment";
 import Coin from "./components/Coin";
 import Info from "./components/Info";
 import { Switch, Route, useRouteMatch, Redirect } from "react-router-dom";
-import {useAuth} from '../../hook/useAuth'
+import {useAuth} from '../../core/hook/useAuth'
 
 export default function Profile() {
   let { path, url } = useRouteMatch();
