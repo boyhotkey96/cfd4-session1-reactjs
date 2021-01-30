@@ -20,7 +20,7 @@ export default function useFormValidate(initialValue, validate) {
 
     for (let i in rule) {
       let r = rule[i];
-      console.log(r);
+      // console.log(r);
 
       if (r.pattern) {
         let pattern = r.pattern;

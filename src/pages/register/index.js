@@ -1,12 +1,30 @@
 import { CircularProgress } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouteMatch } from "react-router-dom";
+import pageApi from "../../api/pageApi";
+import LoadingApi from "../../components/LoadingApi";
 import useFormValidates from "../../core/hook/formValidate";
 
 const style = {
   inputError: { color: "red", fontSize: 14 },
 };
 
-export default function Register() {
+export default function Register(props, ref) {
+  let [course, setCourse] = useState();
+
+  let routerMatch = useRouteMatch();
+  // console.log("router match: ");
+
+  useEffect(async () => {
+    let courses = await pageApi.course_detail(routerMatch.params.slug);
+    if (courses.data) {
+      setCourse(courses.data);
+    } else {
+      setCourse("notfound");
+      // alert('Khóa học không tồn tại')
+    }
+  }, []);
+
   let [loading, setLoading] = useState(false);
 
   let { form, error, inputChange, submit } = useFormValidates(
@@ -65,6 +83,19 @@ export default function Register() {
     }
   }
 
+  if (!course) {
+    return <LoadingApi />;
+  }
+
+  if (course === "notfound") {
+    return <LoadingApi>Khóa học không tồn tại</LoadingApi>;
+  }
+
+  let money = new Intl.NumberFormat("it-IT", {
+    style: "currency",
+    currency: "VND",
+  }).format(course.money);
+
   return (
     <>
       <main className="register-course" id="main">
@@ -72,16 +103,16 @@ export default function Register() {
           <div className="container">
             <div className="wrap container">
               <div className="main-sub-title">ĐĂNG KÝ</div>
-              <h1 className="main-title">Thực chiến front-end căn bản </h1>
+              <h1 className="main-title">{course.title}</h1>
               <div className="main-info">
                 <div className="date">
-                  <strong>Khai giảng:</strong> 15/11/2020
+                  <strong>Khai giảng:</strong> {course.opening_time}
                 </div>
                 <div className="time">
-                  <strong>Thời lượng:</strong> 18 buổi
+                  <strong>Thời lượng:</strong> {`${course.count_video}`} buổi
                 </div>
                 <div className="time">
-                  <strong>Học phí:</strong> 6.000.000 VND
+                  <strong>Học phí:</strong> {money}
                 </div>
               </div>
               <div className="form">

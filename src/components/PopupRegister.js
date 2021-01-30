@@ -6,9 +6,9 @@ import useFormValidate from "../core/hook/formValidate";
 import { useAuth } from "../core/hook/useAuth";
 
 function PopupRegister(props, ref) {
+  console.log(ref);
   let context = useContext(ContextA);
   let auth = useAuth();
-  console.log(ref);
   let [loading, setLoading] = useState(false);
   let { form, inputChange, error, submit } = useFormValidate(
     {
@@ -38,6 +38,7 @@ function PopupRegister(props, ref) {
     e.preventDefault();
     let error = submit();
     if (Object.keys(error).length === 0) {
+      setLoading(true);
       fetch("http://cfd-reactjs.herokuapp.com/elearning/v4/register", {
         method: "POST",
         headers: {
@@ -50,8 +51,9 @@ function PopupRegister(props, ref) {
           console.log(res.data);
           if (res.data) {
             // auth.loginAction(res.data);
-            context.closePopupRegister()
-            context.openPopupLogin()
+            setLoading(false);
+            context.closePopupRegister();
+            context.openPopupLogin();
           }
         });
     }

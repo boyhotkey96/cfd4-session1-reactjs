@@ -5,7 +5,7 @@ let loginStorage = null;
 
 try {
   loginStorage = JSON.parse(localStorage.getItem("login"));
-} catch (error) {}
+} catch (Exception) {}
 
 export default function AuthProvider({ children }) {
   let [login, setLogin] = useState(loginStorage);

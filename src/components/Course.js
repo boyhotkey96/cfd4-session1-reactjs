@@ -1,13 +1,18 @@
 import React from "react";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 export default function Course(props) {
   return (
     <div className="col-md-4 course">
       <div className="wrap">
-        <a className="cover" href="#">
-          <img src={props.thumbnail} alt="" />
-          <span className="badge b1" style={{backgroundColor:`${props.openingcolor}`}}>{props.opening}</span>
+        <Link className="cover" to={`/chi-tiet/${props.slug}`}>
+          <img src={props.thumbnail.link} alt="" />
+          <span
+            className="badge b1"
+            style={{ backgroundColor: `${props.openingcolor}` }}
+          >
+            {props.opening}
+          </span>
           <div className="hover">
             <div className="top">
               <div className="user">
@@ -22,21 +27,29 @@ export default function Course(props) {
               <img src="/img/icon-viewmore.svg" alt="" />
             </div>
           </div>
-        </a>
+        </Link>
         <div className="info">
-          <a className="name" href="#">
+          <Link className="name" to={`/chi-tiet/${props.slug}`}>
             {props.title}
-          </a>
-          <p className="des">{props.des}</p>
+          </Link>
+          <p className="des">{props.short_description}</p>
         </div>
         <div className="bottom">
           <div className="teacher">
             <div className="avatar">
-              <img src={props.avatar} alt="" />
+              <img
+                src={
+                  props.teacher.avatar?.thumbnail?.["thumbnail-1"] ||
+                  props.teacher.avatar.link
+                }
+                alt=""
+              />
             </div>
-            <div className="name">{props.nameteacher}</div>
+            <div className="name">{props.teacher.title}</div>
           </div>
-          <Link to="/dang-ky" className="register-btn">Đăng ký</Link>
+          <Link to={`/dang-ky/${props.slug}`} className="register-btn">
+            Đăng ký
+          </Link>
         </div>
       </div>
     </div>

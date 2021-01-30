@@ -67,8 +67,8 @@ export default function App() {
                 )}
               />
               <PrivateRouter path="/thong-tin-ca-nhan" component={Profile} />
-              <Route path="/chi-tiet/:id" component={Detail} />
-              <PrivateRouter path="/dang-ky" component={Register} />
+              <Route path="/chi-tiet/:slug" exact component={Detail} />
+              <PrivateRouter path="/dang-ky/:slug" exact component={Register} />
               <Route component={Page404} />
               {/* <Redirect from='*' to='/404' /> */}
             </Switch>

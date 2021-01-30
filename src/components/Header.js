@@ -123,8 +123,20 @@ export default function Header(/*{ sendOpenPopupLogin }*/) {
       <nav className="nav">
         <ul>
           <li className="li_login">
-            <a href="#">Đăng nhập</a>
-            <a href="#">Đăng ký</a>
+            <a
+              href="javascript:void(0)"
+              class="btn-register"
+              onClick={() => context.openPopupLogin()}
+            >
+              Đăng nhập
+            </a>
+            <a
+              href="javascript:void(0)"
+              class="btn main btn-open-login"
+              onClick={context.openPopupRegister}
+            >
+              Đăng ký
+            </a>
           </li>
           <li className="active">
             <Link to="/" onClick={delayLink}>

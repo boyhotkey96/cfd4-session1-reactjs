@@ -1,14 +1,15 @@
 import { CircularProgress } from "@material-ui/core";
 import React, { useState, useRef, useContext } from "react";
 import ReactDOM from "react-dom";
+import userApi from "../api/userApi";
 import { ContextA } from "../App";
 import useFormValidate from "../core/hook/formValidate";
 import { useAuth } from "../core/hook/useAuth";
 
 function PopupLogin(props, ref) {
+  // console.log(ref);
   let context = useContext(ContextA);
   let auth = useAuth();
-  console.log(ref);
   let [loading, setLoading] = useState(false);
   let { form, inputChange, error, submit } = useFormValidate(
     {
@@ -30,25 +31,17 @@ function PopupLogin(props, ref) {
     }
   );
 
-  function btnSubmit(e) {
+  async function btnSubmit(e) {
     e.preventDefault();
     let error = submit();
     if (Object.keys(error).length === 0) {
-      fetch("http://cfd-reactjs.herokuapp.com/elearning/v4/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res.data);
-          if (res.data) {
-            auth.loginAction(res.data);
-            context.closePopupLogin()
-          }
-        });
+      setLoading(true);
+      let res = await userApi.login(form)
+      if (res.data) {
+        setLoading(false);
+        auth.loginAction(res.data);
+        context.closePopupLogin();
+      }
     }
   }
 

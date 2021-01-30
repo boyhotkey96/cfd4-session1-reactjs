@@ -10,7 +10,7 @@ export default function Form(/*{transmitOpenPopupLogin}*/) {
         <h3>
           Bạn đã sẵn sàng trở thành chiến binh tiếp theo của Team CFD chưa?
         </h3>
-        <div className="btn main round bg-white">Đăng ký</div>
+        <a href="javasript:void(0)" className="btn main round bg-white" onClick={context.openPopupRegister}>Đăng ký</a>
         <br />
         <a href="javascript:void(0)"
           className="btn main round bg-white"

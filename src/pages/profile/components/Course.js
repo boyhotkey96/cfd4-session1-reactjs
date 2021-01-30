@@ -1,72 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import LoadingApi from "../../../components/LoadingApi";
+import { useAuth } from "../../../core/hook/useAuth";
+import CourseItem from "./CourseItem";
 
 export default function Course() {
+  let auth = useAuth();
+  let [course, setCourse] = useState();
+
+  useEffect(() => {
+    fetch("http://cfd-reactjs.herokuapp.com/elearning/v4/profile/course", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${auth.login.token.accessToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res.data)
+        setCourse(res.data);
+      });
+  }, []);
+
+  if (!course) {
+    return <LoadingApi />;
+  }
+
   return (
     <div className="tab2">
-      <div className="item">
-        <div className="cover">
-          <img src="/img/img3.png" alt="" />
-        </div>
-        <div className="info">
-          <a href="#" className="name">
-            front-end căn bản
-          </a>
-          <div className="date">Khai giảng ngày 09/09/2019</div>
-          <div className="row">
-            <div className>
-              <img src="/img/clock.svg" alt="" className="icon" />
-              54 giờ
-            </div>
-            <div className>
-              <img src="/img/play.svg" alt="" className="icon" />
-              25 video
-            </div>
-            <div className>
-              <img src="/img/user.svg" alt="" className="icon" />
-              20 học viên
-            </div>
-          </div>
-          <div className="process">
-            <div className="line">
-              <div className="rate" style={{ width: "30%" }} />
-            </div>
-            30%
-          </div>
-          <div className="btn overlay round btn-continue">Tiếp tục học</div>
-        </div>
-      </div>
-      <div className="item">
-        <div className="cover">
-          <img src="/img/img7.png" alt="" />
-        </div>
-        <div className="info">
-          <a href="#" className="name">
-            front-end nâng cao
-          </a>
-          <div className="date">Khai giảng ngày 09/09/2019</div>
-          <div className="row">
-            <div className>
-              <img src="/img/clock.svg" alt="" className="icon" />
-              54 giờ
-            </div>
-            <div className>
-              <img src="/img/play.svg" alt="" className="icon" />
-              25 video
-            </div>
-            <div className>
-              <img src="/img/user.svg" alt="" className="icon" />
-              20 học viên
-            </div>
-          </div>
-          <div className="process">
-            <div className="line">
-              <div className="rate" style={{ width: "30%" }} />
-            </div>
-            30%
-          </div>
-          <div className="btn overlay round btn-continue">Tiếp tục học</div>
-        </div>
-      </div>
+      {course.map((courseLists, index) => (
+        <CourseItem key={index} {...courseLists} />
+      ))}
     </div>
   );
 }

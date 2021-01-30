@@ -1,14 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
+import pageApi from "../../api/pageApi";
 
 export default function Detail() {
-  let routerMatch = useRouteMatch();
-//   console.log(routerMatch.params.id);
-
-  function registerCLick() {
-
-  }
-
+  function registerCLick() {}
   return (
     <>
       <main className="course-detail" id="main">
