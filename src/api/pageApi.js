@@ -1,11 +1,13 @@
-import { domain } from "./api";
+import { domain } from "../core/api";
 
 export default {
   home: () => {
-    return fetch(`${domain}/elearning/v4/home`).then(res => res.json());
+    return fetch(`${domain}/elearning/v4/home`).then((res) => res.json());
   },
   course_detail: (slug) => {
-    return fetch(`${domain}/elearning/v4/course/${slug}`)
-    .then(res => res.json())
+    return fetch(`${domain}/elearning/v4/course/${slug}`).then((res) =>
+      res.json()
+    );
   },
+  
 };

@@ -1,39 +1,14 @@
 import React, { useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { ContextA } from "../App";
+import { useAppContext, useDeLaylink, useDelaylink } from "../core/AppProvider";
 import { useAuth } from "../core/hook/useAuth";
 
 export default function Header(/*{ sendOpenPopupLogin }*/) {
-  const context = useContext(ContextA);
+  const context = useAppContext();
   let auth = useAuth();
 
-  let history = useHistory();
-  function delayLink(e) {
-    e.preventDefault();
-    // document.querySelector(".pageLoading").classList.add("active");
-
-    let payloading = document.querySelector(".pageLoading");
-    let div = payloading.querySelector(".loading");
-    console.log(div);
-    let scale =
-      (Math.sqrt(
-        Math.pow(window.outerHeight, 2) + Math.pow(window.outerWidth, 2)
-      ) /
-        100) *
-      2;
-    div.style.transform = `translate(-50%, -50%) scale(${scale})`;
-    div.style.left = `${e.clientX}px`;
-    div.style.top = `${e.clientY}px`;
-
-    setTimeout(() => {
-      history.push(e.target.href?.replace(window.location.origin, "") || "/");
-      $("body").removeClass("menu-is-show");
-    }, 300);
-    setTimeout(() => {
-      // document.querySelector(".pageLoading").classList.remove("active");
-      div.style.transform = `translate(-50%, -50%) scale(${0})`;
-    }, 600);
-  }
+  let delayLink = useDeLaylink();
 
   let $ = window.$;
   useEffect(() => {

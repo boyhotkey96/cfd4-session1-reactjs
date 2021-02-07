@@ -6,7 +6,7 @@ import Review from "./components/Review";
 import Gallery from "./components/Gallery";
 import Form from "./components/Form";
 import PopupLogin from "../../components/PopupLogin";
-import LoadingApi from "../../components/LoadingApi";
+import LoadingApi from "../../core/LoadingApi";
 
 export default function Home(/*props*/) {
   let [state, setState] = useState();

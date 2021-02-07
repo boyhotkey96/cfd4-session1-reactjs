@@ -1,9 +1,11 @@
+// import { Link } from "@material-ui/core";
 import React, { useEffect } from "react";
-import { useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import pageApi from "../../api/pageApi";
 
 export default function Detail() {
-  function registerCLick() {}
+  let routerMatch = useRouteMatch();
+
   return (
     <>
       <main className="course-detail" id="main">
@@ -22,13 +24,13 @@ export default function Detail() {
                   <strong>Thời lượng:</strong> 18 buổi
                 </div>
               </div>
-              <div
+              <Link
+                to={`/dang-ky/${routerMatch.params.slug}`}
                 className="btn white round"
                 style={{ "--color-btn": "#70b6f1" }}
-                onDoubleClick={registerCLick}
               >
                 đăng ký
-              </div>
+              </Link>
             </div>
           </div>
           <div className="bottom">

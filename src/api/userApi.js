@@ -1,4 +1,4 @@
-import { domain } from "./api";
+import { domain } from "../core/api";
 
 export default {
   login: (data) => {
@@ -12,11 +12,22 @@ export default {
   },
   profile: () => {
     let user = JSON.parse(localStorage.getItem("login"));
-    fetch("http://cfd-reactjs.herokuapp.com/elearning/v4/profile/course", {
+    return fetch(`${domain}/elearning/v4/profile/course`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${user.token.accessToken}`,
       },
+    }).then((res) => res.json());
+  },
+  contact: (data, slug) => {
+    let user = JSON.parse(localStorage.getItem("login"));
+    return fetch(`${domain}/elearning/v4/course-register/${slug}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token.accessToken}`,
+      },
+      body: JSON.stringify(data),
     }).then((res) => res.json());
   },
   update: () => {},

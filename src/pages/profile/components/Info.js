@@ -1,6 +1,6 @@
 import { CircularProgress } from "@material-ui/core";
 import React, { useState } from "react";
-import useFormValidate from "../../../core/hook/formValidate";
+import useFormValidate from "../../../core/hook/useFormValidate";
 
 export default function Info() {
   let [loading, setLoading] = useState(false);
@@ -19,7 +19,7 @@ export default function Info() {
           required: true,
         },
         phone: {
-          pattern: "phone", 
+          pattern: "phone",
           required: true,
         },
         email: {
@@ -99,7 +99,7 @@ export default function Info() {
           Email<span>*</span>
         </p>
         <input
-          defaultValue="vuong.dang@dna.vn"
+          // defaultValue="vuong.dang@dna.vn"
           type="text"
           name="email"
           onChange={inputChange}

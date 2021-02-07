@@ -3,12 +3,13 @@ import React, { useState, useRef, useContext } from "react";
 import ReactDOM from "react-dom";
 import userApi from "../api/userApi";
 import { ContextA } from "../App";
-import useFormValidate from "../core/hook/formValidate";
+import useFormValidate from "../core/hook/useFormValidate";
 import { useAuth } from "../core/hook/useAuth";
+import { useAppContext } from "../core/AppProvider";
 
 function PopupLogin(props, ref) {
   // console.log(ref);
-  let context = useContext(ContextA);
+  let context = useAppContext()
   let auth = useAuth();
   let [loading, setLoading] = useState(false);
   let { form, inputChange, error, submit } = useFormValidate(
@@ -41,6 +42,9 @@ function PopupLogin(props, ref) {
         setLoading(false);
         auth.loginAction(res.data);
         context.closePopupLogin();
+      } else {
+        setLoading(false);
+        alert('Email hoặc mật khẩu không đúng')
       }
     }
   }

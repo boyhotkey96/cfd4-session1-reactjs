@@ -2,12 +2,13 @@ import { CircularProgress } from "@material-ui/core";
 import React, { useState, useRef, useContext } from "react";
 import ReactDOM from "react-dom";
 import { ContextA } from "../App";
-import useFormValidate from "../core/hook/formValidate";
+import useFormValidate from "../core/hook/useFormValidate";
 import { useAuth } from "../core/hook/useAuth";
+import { useAppContext } from "../core/AppProvider";
 
 function PopupRegister(props, ref) {
   console.log(ref);
-  let context = useContext(ContextA);
+  let context = useAppContext()
   let auth = useAuth();
   let [loading, setLoading] = useState(false);
   let { form, inputChange, error, submit } = useFormValidate(

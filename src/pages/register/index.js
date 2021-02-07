@@ -2,8 +2,9 @@ import { CircularProgress } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
 import pageApi from "../../api/pageApi";
-import LoadingApi from "../../components/LoadingApi";
-import useFormValidates from "../../core/hook/formValidate";
+import userApi from "../../api/userApi";
+import LoadingApi from "../../core/LoadingApi";
+import useFormValidates from "../../core/hook/useFormValidate";
 
 const style = {
   inputError: { color: "red", fontSize: 14 },
@@ -29,16 +30,16 @@ export default function Register(props, ref) {
 
   let { form, error, inputChange, submit } = useFormValidates(
     {
-      username: "",
+      name: "",
       phone: "",
       email: "",
-      facebook: "",
+      fb: "",
       payment: "chuyển khoản",
       note: "",
     },
     {
       rule: {
-        username: {
+        name: {
           required: true,
         },
         phone: {
@@ -49,7 +50,7 @@ export default function Register(props, ref) {
           pattern: "email",
           required: true,
         },
-        facebook: {
+        fb: {
           pattern: "url",
           required: true,
         },
@@ -71,15 +72,17 @@ export default function Register(props, ref) {
     }
   );
 
-  function btnSubmit() {
+  async function btnSubmit() {
     let error = submit();
-    console.log(error);
+    // console.log(error);
     if (Object.keys(error).length === 0) {
       setLoading(true);
-      setTimeout(() => {
+      let res = await userApi.contact(form, routerMatch.params.slug);
+      console.log(res);
+      if (res) {
         setLoading(false);
-        alert("Đăng ký thành công");
-      }, 1000);
+        alert("Đăng ký khóa học thành công");
+      }
     }
   }
 
@@ -124,13 +127,13 @@ export default function Register(props, ref) {
                     type="text"
                     placeholder="Họ và tên bạn"
                     onChange={inputChange}
-                    name="username"
-                    value={form.username}
+                    name="name"
+                    value={form.name}
                   />
                 </label>
-                {error.username && (
+                {error.name && (
                   <p className="error" style={style.inputError}>
-                    {error.username}
+                    {error.name}
                   </p>
                 )}
                 <label>
@@ -174,14 +177,14 @@ export default function Register(props, ref) {
                   <input
                     type="text"
                     placeholder="https://facebook.com"
-                    name="facebook"
+                    name="fb"
                     onChange={inputChange}
-                    value={form.facebook}
+                    value={form.fb}
                   />
                 </label>
-                {error.facebook && (
+                {error.fb && (
                   <p className="error" style={style.inputError}>
-                    {error.facebook}
+                    {error.fb}
                   </p>
                 )}
                 <label className="disable">

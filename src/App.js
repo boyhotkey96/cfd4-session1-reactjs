@@ -13,9 +13,11 @@ import PopupLogin from "./components/PopupLogin";
 import AuthProvider from "./core/hook/useAuth";
 import PrivateRouter from "./core/PrivateRouter";
 import PopupRegister from "./components/PopupRegister";
+import AppProvider from "./core/AppProvider";
+import store from "./redux/store";
+import Demo from "./pages/demo/DemoRedux";
 
-export const ContextA = React.createContext();
-export const ContextB = React.createContext();
+// export const ContextA = React.createContext();
 
 export default function App() {
   let refLogin = useRef();
@@ -41,41 +43,33 @@ export default function App() {
   }
 
   return (
-    <AuthProvider>
-      <ContextB.Provider>
-        <ContextA.Provider
-          value={{
-            openPopupLogin: openPopupLogin,
-            closePopupLogin,
-            openPopupRegister,
-            closePopupRegister: closePopupRegister,
-          }}
-        >
-          <BrowserRouter>
-            <Loading />
-            <PopupLogin
-              ref={refLogin} /*sendClosePopupLogin={closePopupLogin}*/
-            />
-            <PopupRegister ref={refRegister} />
-            <Header /*sendOpenPopupLogin={openPopupLogin}*/ />
-            <Switch>
-              <Route
-                path="/"
-                exact
-                component={() => (
-                  <Home /*transmitOpenPopupLogin={openPopupLogin}*/ />
-                )}
-              />
-              <PrivateRouter path="/thong-tin-ca-nhan" component={Profile} />
-              <Route path="/chi-tiet/:slug" exact component={Detail} />
-              <PrivateRouter path="/dang-ky/:slug" exact component={Register} />
-              <Route component={Page404} />
-              {/* <Redirect from='*' to='/404' /> */}
-            </Switch>
-            <Footer />
-          </BrowserRouter>
-        </ContextA.Provider>
-      </ContextB.Provider>
-    </AuthProvider>
+    <AppProvider
+      value={{
+        openPopupLogin: openPopupLogin,
+        closePopupLogin,
+        openPopupRegister,
+        closePopupRegister: closePopupRegister,
+      }}
+    >
+      <store />
+      <Loading />
+      <PopupLogin ref={refLogin} /*sendClosePopupLogin={closePopupLogin}*/ />
+      <PopupRegister ref={refRegister} />
+      <Header /*sendOpenPopupLogin={openPopupLogin}*/ />
+      <Switch>
+        <Route
+          path="/"
+          exact
+          component={() => <Home /*transmitOpenPopupLogin={openPopupLogin}*/ />}
+        />
+        <PrivateRouter path="/thong-tin-ca-nhan" component={Profile} />
+        <PrivateRouter path="/dang-ky/:slug" exact component={Register} />
+        <Route path="/chi-tiet/:slug" exact component={Detail} />
+        <Route path="/demo" component={Demo} />
+        <Route component={Page404} />
+        {/* <Redirect from='*' to='/404' /> */}
+      </Switch>
+      <Footer />
+    </AppProvider>
   );
 }
