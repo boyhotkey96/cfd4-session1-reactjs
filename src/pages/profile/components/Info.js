@@ -1,12 +1,15 @@
 import { CircularProgress } from "@material-ui/core";
 import React, { useState } from "react";
+import { useAuth } from "../../../core/hook/useAuth";
+
 import useFormValidate from "../../../core/hook/useFormValidate";
 
 export default function Info() {
+  let auth = useAuth()
   let [loading, setLoading] = useState(false);
   let { form, error, inputChange, submit } = useFormValidate(
     {
-      username: "",
+      name: "",
       phone: "",
       email: "",
       facebook: "",
@@ -102,6 +105,7 @@ export default function Info() {
           // defaultValue="vuong.dang@dna.vn"
           type="text"
           name="email"
+          disabled
           onChange={inputChange}
           value={form.email}
         />

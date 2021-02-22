@@ -77,8 +77,10 @@ export default function Register(props, ref) {
     // console.log(error);
     if (Object.keys(error).length === 0) {
       setLoading(true);
-      let res = await userApi.contact(form, routerMatch.params.slug);
+      let res = await userApi.course_register(form, routerMatch.params.slug);
+      let resContact = await userApi.contact(form);
       console.log(res);
+      console.log(resContact);
       if (res) {
         setLoading(false);
         alert("Đăng ký khóa học thành công");

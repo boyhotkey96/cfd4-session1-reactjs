@@ -92,3 +92,14 @@ Authorization: Bearer {{TOKEN}}
 #### Lấy danh sách khóa học liên quan
 
 GET {{DOMAIN}}/elearning/v4/course-related/cfd5-react-js
+
+
+#### Gửi liên hệ
+POST {{DOMAIN}}/elearning/v4/contact
+Content-Type: application/json
+
+{
+    "name": "asdfasdfsdf",
+    "phone": "424234434",
+    "email": "dangthuyen@gmail.com"
+}

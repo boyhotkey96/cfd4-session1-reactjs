@@ -21,7 +21,7 @@ export default function Course() {
     //     setCourse(res.data);
     //   });
 
-    let res = await userApi.profile(course);
+    let res = await userApi.course(course);
     // console.log(res);
     if (res.data) {
       setCourse(res.data);

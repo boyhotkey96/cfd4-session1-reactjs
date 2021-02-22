@@ -10,7 +10,7 @@ export default {
       body: JSON.stringify(data),
     }).then((res) => res.json());
   },
-  profile: () => {
+  course: () => {
     let user = JSON.parse(localStorage.getItem("login"));
     return fetch(`${domain}/elearning/v4/profile/course`, {
       method: "POST",
@@ -19,7 +19,7 @@ export default {
       },
     }).then((res) => res.json());
   },
-  contact: (data, slug) => {
+  course_register: (data, slug) => {
     let user = JSON.parse(localStorage.getItem("login"));
     return fetch(`${domain}/elearning/v4/course-register/${slug}`, {
       method: "POST",
@@ -30,6 +30,15 @@ export default {
       body: JSON.stringify(data),
     }).then((res) => res.json());
   },
-  update: () => {},
-  payment: () => {},
+  contact: (data) => {
+    return fetch(`${domain}/elearning/v4/contact`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json());
+  },
+  update: () => { },
+  payment: () => { },
 };
