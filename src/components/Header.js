@@ -1,15 +1,22 @@
 import React, { useEffect, useContext } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { ContextA } from "../App";
 import { useAppContext, useDeLaylink, useDelaylink } from "../core/AppProvider";
 import { useAuth } from "../core/hook/useAuth";
+import { logout } from "../redux/actions/userAction";
 
 export default function Header(/*{ sendOpenPopupLogin }*/) {
   const context = useAppContext();
   let auth = useAuth();
-
+  let dispatch = useDispatch()
+  
   let delayLink = useDeLaylink();
 
+  function logoutUser() {
+    dispatch(logout());
+  }
+  
   let $ = window.$;
   useEffect(() => {
     $(".menu-hambeger").on("click", function () {
@@ -69,29 +76,29 @@ export default function Header(/*{ sendOpenPopupLogin }*/) {
                   <Link onClick={delayLink} to="/thong-tin-ca-nhan">
                     Thông tin tài khoản
                   </Link>
-                  <a href="javascript:void()" onClick={auth.logout} to="/">
+                  <a href="javascript:void(0)" onClick={logoutUser} to="/">
                     Đăng xuất
                   </a>
                 </div>
               </div>
             ) : (
-              <div class="not-login bg-none">
-                <a
-                  href="javascript:void(0)"
-                  class="btn-register"
-                  onClick={() => context.openPopupLogin()}
-                >
-                  Đăng nhập
+                <div class="not-login bg-none">
+                  <a
+                    href="javascript:void(0)"
+                    class="btn-register"
+                    onClick={() => context.openPopupLogin()}
+                  >
+                    Đăng nhập
                 </a>
-                <a
-                  href="javascript:void(0)"
-                  class="btn main btn-open-login"
-                  onClick={context.openPopupRegister}
-                >
-                  Đăng ký
+                  <a
+                    href="javascript:void(0)"
+                    class="btn main btn-open-login"
+                    onClick={context.openPopupRegister}
+                  >
+                    Đăng ký
                 </a>
-              </div>
-            )}
+                </div>
+              )}
           </div>
         </div>
       </header>

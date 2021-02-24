@@ -1,40 +1,28 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-
-const COUNT_INCREMENT = "COUNT_INCREMENT";
-const COUNT_DECREMENT = "COUNT_DECREMENT";
-
-export function incrementAction(data) {
-  return {
-    type: "INCREMENT",
-    payload: data,
-  };
-}
-
-export function decrementAction(data) {
-  return {
-    type: "COUNT_DECREMENT",
-    payload: data,
-  };
-}
-
-function counter(state = 10, action) {
-  console.log("reducers");
-  switch (action.type) {
-    case "INCREMENT":
-      return state + (action.payload || 1);
-    case "COUNT_DECREMENT":
-      return state - (action.payload || 1);
-    default:
-      return state;
-  }
-}
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import reducer from './reducers'
+import thunk from 'redux-thunk'
+// import { composeWithDevTools } from 'redux-devtools-extension';
 
 // const logger = (store) => (next) => (action) => {
 //   console.log(action);
 //   next(action);
 // };
 
-let store = createStore(counter);
+const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+
+// const thunkFake = store => next => action => {
+//   if (typeof action === 'function') {
+//     action(store.dispatch, store.getState())
+//   } else {
+//     next(action);
+//   }
+// }
+
+// const middleware = [
+//   thunk,
+// ];
+
+let store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 
 // store.subscribe(() => {
 //   console.log(store.getState());

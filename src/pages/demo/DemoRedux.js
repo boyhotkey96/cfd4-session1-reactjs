@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { incrementAction, decrementAction } from "../../redux/store";
+import { incrementAction, decrementAction } from "../../redux/actions/counterAction";
 
 export default function DemoRedux() {
-  const state = useSelector((state) => state);
+  const state = useSelector((state) => state.counter);
   const dispatch = useDispatch();
 
   function _increment() {

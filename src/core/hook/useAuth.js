@@ -1,25 +1,30 @@
 import React, { useContext, useState } from "react";
+import { useSelector } from "react-redux";
 
 const Context = React.createContext();
 let loginStorage = null;
 
 try {
   loginStorage = JSON.parse(localStorage.getItem("login"));
-} catch (Exception) {}
+} catch (Exception) { }
 
 export default function AuthProvider({ children }) {
   let [login, setLogin] = useState(loginStorage);
 
   function loginAction(data) {
     if (data) {
-      localStorage.setItem("login", JSON.stringify(data));
-      setLogin(data);
+      if (data.token) {
+        addToken(data.token)
+      }
+      localStorage.setItem('login', JSON.stringify(data))
+      setLogin(data)
     }
   }
 
   function logout() {
     localStorage.removeItem("login");
     setLogin(null);
+    // return false;
   }
 
   return (
@@ -30,5 +35,17 @@ export default function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-  return useContext(Context);
+  // return useContext(Context);
+
+  let user = useSelector(state => state.user)
+  return user;
+}
+
+export function addToken(data) {
+  localStorage.setItem('token', JSON.stringify(data))
+}
+
+export function getToken() {
+  let token = JSON.parse(localStorage.getItem('token'))
+  return token.accessToken
 }

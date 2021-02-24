@@ -7,17 +7,30 @@ import Gallery from "./components/Gallery";
 import Form from "./components/Form";
 import PopupLogin from "../../components/PopupLogin";
 import LoadingApi from "../../core/LoadingApi";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchHome, homeUpdateData } from '../../redux/actions/homeAction'
+import pageApi from "../../api/pageApi";
 
 export default function Home(/*props*/) {
-  let [state, setState] = useState();
+  // let [state, setState] = useState();
+  let home = useSelector(state => state.home)
+  const dispatch = useDispatch()
+
   // let [review, setReview] = useState();
   // let [gallery, setGallery] = useState();
 
   useEffect(async () => {
-    let res = await fetch("http://cfd-reactjs.herokuapp.com/elearning/v4/home");
-    res = await res.json();
+    if (home.loading) {
+      // let res = await fetch("http://cfd-reactjs.herokuapp.com/elearning/v4/home");
+      // res = await res.json();
+
+      // let res = await pageApi.home();
+      // dispatch(homeUpdateData(res))
+
+      dispatch(fetchHome())
+    }
     // console.log(res);
-    setState(res);
+    // setState(res);
   }, []);
 
   useEffect(() => {
@@ -54,16 +67,16 @@ export default function Home(/*props*/) {
   }, []);
   console.log("render");
 
-  if (!state) {
+  if (home.loading) {
     return <LoadingApi />;
   }
   return (
     <main className="homepage" id="main">
       <Banner />
-      <CourseList offline={state.offline} online={state.online} />
+      <CourseList offline={home.offline} online={home.online} />
       <Special />
-      <Review list={state.review} />
-      <Gallery list={state.gallery} />
+      <Review list={home.review} />
+      <Gallery list={home.gallery} />
       <Form /*transmitOpenPopupLogin={props.transmitOpenPopupLogin}*/ />
       <PopupLogin />
     </main>

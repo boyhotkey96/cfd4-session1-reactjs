@@ -1,17 +1,23 @@
 import { CircularProgress } from "@material-ui/core";
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import ReactDOM from "react-dom";
 import userApi from "../api/userApi";
 import { ContextA } from "../App";
 import useFormValidate from "../core/hook/useFormValidate";
 import { useAuth } from "../core/hook/useAuth";
 import { useAppContext } from "../core/AppProvider";
+import { useDispatch } from "react-redux";
+import { fetchLogin, login } from "../redux/actions/userAction";
 
 function PopupLogin(props, ref) {
   // console.log(ref);
   let context = useAppContext()
   let auth = useAuth();
+
+  let dispatch = useDispatch();
+
   let [loading, setLoading] = useState(false);
+
   let { form, inputChange, error, submit } = useFormValidate(
     {
       username: "",
@@ -38,9 +44,12 @@ function PopupLogin(props, ref) {
     if (Object.keys(error).length === 0) {
       setLoading(true);
       let res = await userApi.login(form)
+      // console.log(fetchLogin)
       if (res.data) {
         setLoading(false);
-        auth.loginAction(res.data);
+        // auth.loginAction`(res.data);
+        dispatch(login(res.data))
+        // dispatch(fetchLogin())
         context.closePopupLogin();
       } else {
         setLoading(false);

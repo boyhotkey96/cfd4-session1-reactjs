@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import LoadingApi from "../../../core/LoadingApi";
 import { useAuth } from "../../../core/hook/useAuth";
 import CourseItem from "./CourseItem";
-import userApi from "../../../api/userApi";
+import userApi from '../../../api/userApi'
 
 export default function Course() {
   let auth = useAuth();
@@ -20,12 +20,11 @@ export default function Course() {
     //     console.log(res.data)
     //     setCourse(res.data);
     //   });
-
-    let res = await userApi.course(course);
-    // console.log(res);
-    if (res.data) {
-      setCourse(res.data);
-    }
+      let res = await userApi.course(course);
+      // console.log(res);
+      if (res.data) {
+        setCourse(res.data);
+      }
   }, []);
 
   if (!course) {
