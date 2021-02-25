@@ -3,10 +3,16 @@ import LoadingApi from "../../../core/LoadingApi";
 import { useAuth } from "../../../core/hook/useAuth";
 import CourseItem from "./CourseItem";
 import userApi from '../../../api/userApi'
+import { useDispatch, useSelector } from "react-redux";
+import { addCourse, fetchCourseUser } from "../../../redux/actions/courseAction";
 
 export default function Course() {
   let auth = useAuth();
-  let [course, setCourse] = useState();
+  // let [course, setCourse] = useState();
+
+  let courseUser = useSelector(state => state.courseUser);
+  // console.log(courseUser)
+  const dispatch = useDispatch();
 
   useEffect(async () => {
     // fetch("http://cfd-reactjs.herokuapp.com/elearning/v4/profile/course", {
@@ -20,20 +26,21 @@ export default function Course() {
     //     console.log(res.data)
     //     setCourse(res.data);
     //   });
-      let res = await userApi.course(course);
-      // console.log(res);
-      if (res.data) {
-        setCourse(res.data);
-      }
+    // let res = await userApi.course();
+    // console.log(res);
+    // if (res) {
+      // setCourse(res.data);
+      dispatch(fetchCourseUser())
+    // }
   }, []);
 
-  if (!course) {
+  if (!courseUser) {
     return <LoadingApi />;
   }
 
   return (
     <div className="tab2">
-      {course.map((courseLists, index) => (
+      {courseUser.data.map((courseLists, index) => (
         <CourseItem key={index} {...courseLists} />
       ))}
     </div>

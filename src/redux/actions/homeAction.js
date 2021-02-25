@@ -10,7 +10,7 @@ export function homeUpdateData(data) {
 
 export function fetchHome() {
   return (dispatch, state) => {
-    console.log(state)
+    // console.log(state)
     pageApi.home().then(res => {
       dispatch(homeUpdateData(res))
     })

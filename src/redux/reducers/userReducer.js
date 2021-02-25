@@ -22,8 +22,10 @@ export function getToken() {
 export default function userReducer(state = initState, action) {
   switch (action.type) {
     case USER.LOGIN:
-      localStorage.setItem('login', JSON.stringify(action.payload))
-      addToken(action.payload.token)
+      if (action.payload) {
+        localStorage.setItem('login', JSON.stringify(action.payload))
+        addToken(action.payload.token)
+      }
       return {
         ...state,
         login: action.payload
@@ -36,6 +38,6 @@ export default function userReducer(state = initState, action) {
         login: null
       }
     default:
-      return state
+      return state;
   }
 }

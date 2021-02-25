@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Course({ course }) {
-  // console.log(course)
+  console.log(course)
   return (
     <div className="tab2">
       <div className="item">

@@ -1,7 +1,7 @@
 import userApi from '../../api/userApi'
 import { USER } from './type'
 
-export function login(data) {
+export function loginUser(data) {
   return {
     type: USER.LOGIN,
     payload: data
@@ -14,10 +14,10 @@ export function logout() {
   }
 }
 
-export function fetchLogin() {
+export function fetchLogin(form) {
   return (dispatch) => {
-    userApi.login().then(res => {
-      dispatch(res.data);
+    userApi.login(form).then(res => {
+      dispatch(loginUser(res.data));
     })
   }
 }

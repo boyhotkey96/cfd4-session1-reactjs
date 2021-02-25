@@ -11,6 +11,7 @@ let initState = {
 export default function homeReducer(state = initState, action) {
   switch (action.type) {
     case HOME_UPDATE_DATA:
+      // console.log(action.payload)
       return {
         ...state,
         ...action.payload,

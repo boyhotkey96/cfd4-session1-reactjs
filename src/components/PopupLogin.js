@@ -6,15 +6,18 @@ import { ContextA } from "../App";
 import useFormValidate from "../core/hook/useFormValidate";
 import { useAuth } from "../core/hook/useAuth";
 import { useAppContext } from "../core/AppProvider";
-import { useDispatch } from "react-redux";
-import { fetchLogin, login } from "../redux/actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLogin, loginUser } from "../redux/actions/userAction";
 
 function PopupLogin(props, ref) {
   // console.log(ref);
   let context = useAppContext()
   let auth = useAuth();
 
-  let dispatch = useDispatch();
+  // let login = useSelector(state => state.user)
+  // console.log(login);
+
+  const dispatch = useDispatch();
 
   let [loading, setLoading] = useState(false);
 
@@ -44,12 +47,11 @@ function PopupLogin(props, ref) {
     if (Object.keys(error).length === 0) {
       setLoading(true);
       let res = await userApi.login(form)
-      // console.log(fetchLogin)
       if (res.data) {
         setLoading(false);
-        // auth.loginAction`(res.data);
-        dispatch(login(res.data))
-        // dispatch(fetchLogin())
+        // auth.loginAction(res.data);
+        dispatch(loginUser(res.data))
+        // dispatch(fetchLogin(form))
         context.closePopupLogin();
       } else {
         setLoading(false);

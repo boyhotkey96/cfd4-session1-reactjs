@@ -14,6 +14,7 @@ import pageApi from "../../api/pageApi";
 export default function Home(/*props*/) {
   // let [state, setState] = useState();
   let home = useSelector(state => state.home)
+  console.log(home)
   const dispatch = useDispatch()
 
   // let [review, setReview] = useState();
@@ -26,7 +27,6 @@ export default function Home(/*props*/) {
 
       // let res = await pageApi.home();
       // dispatch(homeUpdateData(res))
-
       dispatch(fetchHome())
     }
     // console.log(res);
